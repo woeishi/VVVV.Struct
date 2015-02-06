@@ -1,0 +1,10 @@
+
+#v4p backup files
+*~.xml
+#v4p temp save files
+*~temp.v4p
+#dynamic plugins
+bin/
+obj/
+#windows stuff
+*.db
