@@ -240,7 +240,7 @@ namespace VVVV.Struct
 		protected override void BaseOnImportSatisfied() {}
 		protected override void RefreshStruct(Struct str) {}
 		
-		private void WritePin(Dictionary<string,IIOContainer> data, ref int offset)
+		private void WritePin(Dictionary<string,IIOContainer> data, Dictionary<string,int> offset)
 		{
 			foreach(var entry in data)
 			{
@@ -249,9 +249,9 @@ namespace VVVV.Struct
 				outPin.SliceCount += inPin.SliceCount;
 				for (int i=0; i<inPin.SliceCount; i++)
 				{
-					outPin[i+offset] = inPin[i];
+					outPin[i+offset[entry.Key]] = inPin[i];
 				}
-				offset += inPin.SliceCount;
+				offset[entry.Key] += inPin.SliceCount;
 				
 				//set Bin Size
 				var binOutPin = FPins["Bin"+entry.Key].RawIOObject as ISpread;
@@ -273,19 +273,22 @@ namespace VVVV.Struct
 					
 					if (hits.Count>0)
 					{
-						foreach (var pin in FPins.Values)
-							(pin.RawIOObject as ISpread).SliceCount = 0;
+						Dictionary<string, int> binOffset = new Dictionary<string, int>();
+						foreach (var pin in FPins)
+						{
+							(pin.Value.RawIOObject as ISpread).SliceCount = 0;
+							binOffset[pin.Key] = 0;
+						}
 						
-						int offset = 0;
 						if (FMatch[0].Index == 0)
-							WritePin(FInput[hits[0]].Data, ref offset);
+							WritePin(FInput[hits[0]].Data, binOffset);
 						else if (FMatch[0].Index == 1)
-							WritePin(FInput[hits[hits.Count-1]].Data, ref offset);
+							WritePin(FInput[hits[hits.Count-1]].Data, binOffset);
 						else
 						{
 							foreach (int id in hits)
 							{
-								WritePin(FInput[id].Data,ref offset);
+								WritePin(FInput[id].Data, binOffset);
 							}
 						}
 						FStatus[0] = "OK";
