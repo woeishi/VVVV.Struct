@@ -4,7 +4,7 @@ using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Struct
 {
-	public class Definition
+	public class Definition : EventArgs
 	{
 		private string key;
 		public string Key { get { return key; } }
