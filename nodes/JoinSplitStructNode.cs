@@ -240,18 +240,16 @@ namespace VVVV.Struct
 		protected override void BaseOnImportSatisfied() {}
 		protected override void RefreshStruct(Struct str) {}
 		
-		private void WritePin(Dictionary<string,IIOContainer> data, Dictionary<string,int> offset)
+		private void WriteOutputs(Dictionary<string,IIOContainer> data)
 		{
 			foreach(var entry in data)
 			{
 				var inPin = entry.Value.RawIOObject as ISpread;
 				var outPin = FPins[entry.Key].RawIOObject as ISpread;
+				int offset = outPin.SliceCount;
 				outPin.SliceCount += inPin.SliceCount;
 				for (int i=0; i<inPin.SliceCount; i++)
-				{
-					outPin[i+offset[entry.Key]] = inPin[i];
-				}
-				offset[entry.Key] += inPin.SliceCount;
+					outPin[i+offset] = inPin[i];
 				
 				//set Bin Size
 				var binOutPin = FPins["Bin"+entry.Key].RawIOObject as ISpread;
@@ -273,31 +271,21 @@ namespace VVVV.Struct
 					
 					if (hits.Count>0)
 					{
-						Dictionary<string, int> binOffset = new Dictionary<string, int>();
 						foreach (var pin in FPins)
-						{
 							(pin.Value.RawIOObject as ISpread).SliceCount = 0;
-							binOffset[pin.Key] = 0;
-						}
 						
 						if (FMatch[0].Index == 0)
-							WritePin(FInput[hits[0]].Data, binOffset);
+							WriteOutputs(FInput[hits[0]].Data);
 						else if (FMatch[0].Index == 1)
-							WritePin(FInput[hits[hits.Count-1]].Data, binOffset);
+							WriteOutputs(FInput[hits[hits.Count-1]].Data);
 						else
-						{
 							foreach (int id in hits)
-							{
-								WritePin(FInput[id].Data, binOffset);
-							}
-						}
+								WriteOutputs(FInput[id].Data);
+						
 						FStatus[0] = "OK";
 					}
 					else
-					{
 						FStatus[0] = "No matching Definition";
-					}
-					
 				}
 				else
 					FStatus[0] = "Input null";
