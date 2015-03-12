@@ -85,7 +85,7 @@ namespace VVVV.Struct
 				if (FPins.ContainsKey(key))
 				{
 					pins.Add(key, FPins[key]);
-					s.Data.Add(key, FPins[key]);
+					s.Data.Add(key, FPins[key].RawIOObject);
 					FPins.Remove(key);
 					
 					if (!FIsJoin) //create output bin size
@@ -109,7 +109,7 @@ namespace VVVV.Struct
 					
 					var pin = FIOFactory.CreateIOContainer(pinType, attr);
 					pins.Add(key,pin);
-					s.Data.Add(key, pin);
+					s.Data.Add(key, pin.RawIOObject);
 
 					if (!FIsJoin) //create output bin size
 					{
@@ -240,11 +240,11 @@ namespace VVVV.Struct
 		protected override void BaseOnImportSatisfied() {}
 		protected override void RefreshStruct(Struct str) {}
 		
-		private void WriteOutputs(Dictionary<string,IIOContainer> data)
+		private void WriteOutputs(Dictionary<string,object> data)
 		{
 			foreach(var entry in data)
 			{
-				var inPin = entry.Value.RawIOObject as ISpread;
+				var inPin = entry.Value as ISpread;
 				var outPin = FPins[entry.Key].RawIOObject as ISpread;
 				int offset = outPin.SliceCount;
 				outPin.SliceCount += inPin.SliceCount;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using VVVV.PluginInterfaces.V2;
+using VVVV.PluginInterfaces.V2.NonGeneric;
 
 namespace VVVV.Struct
 {
@@ -36,13 +37,26 @@ namespace VVVV.Struct
 		private string key;
 		public string Key { get { return key; } }
 
-		private Dictionary<string,IIOContainer> data;
-		public Dictionary<string,IIOContainer> Data { get { return data; } }
+		private Dictionary<string,object> data;
+		public Dictionary<string,object> Data { get { return data; } }
 		
 		public Struct(string name)
 		{
 			key = name;
-			data = new Dictionary<string,IIOContainer>();
+			data = new Dictionary<string,object>();
+		}
+		
+		public Struct DeepCopy()
+		{
+			if (this == null)
+				return null;
+			else
+			{
+				var s = new Struct(this.Key);
+				foreach (var entry in this.Data)
+					s.Data[entry.Key] = (entry.Value as ISpread).Clone();
+				return s;
+			}
 		}
 	}
 }
