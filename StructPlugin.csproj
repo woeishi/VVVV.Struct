@@ -55,6 +55,7 @@
     <Compile Include="core\StructTypeMapper.cs" />
     <Compile Include="nodes\BasicStructNodes.cs" />
     <Compile Include="nodes\DefinitionStructNode.cs" />
+    <Compile Include="nodes\FrameDelayStructNode.cs" />
     <Compile Include="nodes\GenericStructNodes.cs" />
     <Compile Include="nodes\JoinSplitStructNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
