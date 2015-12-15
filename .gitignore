@@ -1,10 +1,22 @@
-
 #v4p backup files
 *~.xml
+
 #v4p temp save files
 *~temp.v4p
+
 #dynamic plugins
 bin/
 obj/
+
 #windows stuff
 *.db
+
+#nuget stuff
+.nuget
+**/packages/*
+!**/packages/repositories.config
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
