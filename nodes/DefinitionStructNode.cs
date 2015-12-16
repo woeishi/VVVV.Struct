@@ -83,11 +83,11 @@ namespace VVVV.Struct
 			
 			FLocalName.SliceCount = 0;
 			FLocalType.SliceCount = 0;
-			foreach (var entry in definition.Types)
-			{
-				FLocalName.Add(entry.Key);
-				FLocalType.Add(entry.Value.Name);
-			}
+            foreach (var property in definition.Properties)
+            {
+                FLocalName.Add(property.Name);
+                FLocalType.Add(property.Datatype.Name);
+            }
 		}
 		
 		// Called when data for any output pin is requested.

@@ -79,9 +79,9 @@ namespace VVVV.Struct
 		{
 			Struct s = new Struct(FStructDefName);
 			var pins =  new Dictionary<string,IIOContainer>();
-			foreach (var entry in definition.Types)
+			foreach (var property in definition.Properties)
 			{
-				string key = entry.Key+entry.Value; 
+				string key = property.Name+property.Datatype; 
 				if (FPins.ContainsKey(key))
 				{
 					pins.Add(key, FPins[key]);
@@ -97,15 +97,15 @@ namespace VVVV.Struct
 				}
 				else
 				{
-					Type pinType = typeof(ISpread<>).MakeGenericType(entry.Value);
+					Type pinType = typeof(ISpread<>).MakeGenericType(property.Datatype);
 					IOAttribute attr;
 					if (FIsJoin)
 					{
-						attr = new InputAttribute(entry.Key);
-						attr = StructUtils.TrySetDefault(attr as InputAttribute, entry.Value, definition.Defaults[entry.Key]);
+						attr = new InputAttribute(property.Name);
+						attr = StructUtils.TrySetDefault(attr as InputAttribute, property.Datatype, property.Default.ToString());
 					}
 					else
-						attr = new OutputAttribute(entry.Key);
+						attr = new OutputAttribute(property.Name);
 					
 					var pin = FIOFactory.CreateIOContainer(pinType, attr);
 					pins.Add(key,pin);

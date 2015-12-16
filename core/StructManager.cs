@@ -16,9 +16,9 @@ namespace VVVV.Struct
 			Definition def =  new Definition(key);
 			
 			int spreadmax = names.CombineWith(types).CombineWith(defaults);
-			for (int i=0; i<spreadmax; i++)
-				if (!string.IsNullOrEmpty(names[i]))
-					def.Define(names[i].Trim(), StructTypeMapper.Map(types[i].Trim()), defaults[i].Trim());
+            for (int i = 0; i < spreadmax; i++)
+                if (!string.IsNullOrEmpty(names[i]))
+                    def.AddProperty(new Property(names[i].Trim(), StructTypeMapper.Map(types[i].Trim()), defaults[i].Trim()));
 			
 			Definitions[key] = def;
 			

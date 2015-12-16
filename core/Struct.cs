@@ -5,28 +5,35 @@ using VVVV.PluginInterfaces.V2.NonGeneric;
 
 namespace VVVV.Struct
 {
+    public class Property
+    {
+        public string Name;
+        public Type Datatype;
+        public string Default;
+
+        public Property(string name, Type type, string defaultValue)
+        {
+            Name = name;
+            Datatype = type;
+            Default = defaultValue;
+        }
+    }
+
 	public class Definition : EventArgs
 	{
-		private string key;
-		public string Key { get { return key; } }
-		
-		private Dictionary<string,Type> typeDict;
-		public Dictionary<string,Type> Types { get { return typeDict; } }
-		private Dictionary<string,string> defaultDict;
-		public Dictionary<string,string> Defaults { get { return defaultDict; } }
-		
+        public string Key;
+        public List<Property> Properties;
+
 		internal Definition(string key)
 		{
-			this.key = key;
-			typeDict = new Dictionary<string, Type>();
-			defaultDict = new Dictionary<string, string>();
+            Key = key;
+            Properties = new List<Property>();
 		}
 		
-		internal void Define(string name, Type Type, string defaultValue = "")
-		{
-			typeDict[name] = Type;
-			defaultDict[name] = defaultValue;
-		}
+        internal void AddProperty(Property property)
+        {
+            Properties.Add(property);
+        }
 	}
 	
 	/// <summary>
