@@ -16,7 +16,7 @@ namespace VVVV.Struct
 	#region PluginInfo
 	[PluginInfo(Name = "Definition", Category = "Struct", Help = "creates a struct definition", Author = "tonfilm, woei", AutoEvaluate = true, Tags = "")]
 	#endregion PluginInfo
-	public class StructDefinitionAltNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+	public class StructDefinitionNode : IPluginEvaluate, IPartImportsSatisfiedNotification
 	{
 		#region fields & pins
 		[Config("Struct Name", IsSingle = true)]
@@ -50,43 +50,44 @@ namespace VVVV.Struct
 		public ISpread<string> FLocalType;
 		
 		[Import()]
-		public IIOFactory FIOFactory;
-		
-		[Import()]
 		public ILogger FLogger;
 		#endregion fields & pins
 		
 		public void OnImportsSatisfied()
 		{
-			FConfigStructName.Changed += HandleDefinitionChanged;
+            FLocalDef[0] = string.Empty;
+            FLocalName.SliceCount = 0;
+            FLocalType.SliceCount = 0;
+
+            StructManager.DefinitionsChanged += SetLocalOutput;
+
+            FConfigStructName.Changed += HandleDefinitionChanged;
 			FConfigPinName.Changed += HandleDefinitionChanged;
 			FConfigPinType.Changed += HandleDefinitionChanged;
 			FConfigPinDefault.Changed += HandleDefinitionChanged;
-			
-			StructManager.DefinitionsChanged += SetLocalOutput;
-			
-			FLocalDef.SliceCount = 0;
-			FLocalName.SliceCount = 0;
-			FLocalType.SliceCount = 0;
 		}
 		
 		private void HandleDefinitionChanged(IDiffSpread<string> sender)
 		{
-			if(FConfigStructName[0] != "")
-				StructManager.CreateDefinition(FConfigStructName[0],FConfigPinName,FConfigPinType,FConfigPinDefault);
+            if (FConfigStructName[0] != "")
+            {
+                FLocalDef[0] = string.Empty;
+                FLocalName.SliceCount = 0;
+                FLocalType.SliceCount = 0;
+                StructManager.CreateDefinition(FConfigStructName[0], FConfigPinName, FConfigPinType, FConfigPinDefault);
+            }
 		}
 		
 		private void SetLocalOutput(object sender, Definition definition)
 		{
-			FLocalDef.SliceCount = 1;
-			FLocalDef[0] = definition.Key;
-			
-			FLocalName.SliceCount = 0;
-			FLocalType.SliceCount = 0;
-            foreach (var property in definition.Properties)
+            if (definition.Key == FConfigStructName[0])
             {
-                FLocalName.Add(property.Name);
-                FLocalType.Add(property.Datatype.Name);
+                FLocalDef[0] = definition.Key;
+                foreach (var property in definition.Properties)
+                {
+                    FLocalName.Add(property.Name);
+                    FLocalType.Add(property.Datatype.Name);
+                }
             }
 		}
 		
@@ -108,6 +109,4 @@ namespace VVVV.Struct
 				FConfigPinDefault.AssignFrom(FPinDefaultIn);
 		}
 	}
-	
-
 }
