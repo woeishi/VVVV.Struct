@@ -45,20 +45,20 @@ namespace VVVV.Struct
 			Mappings.Add("color", typeof(RGBAColor));
 			Mappings.Add("rgbacolor", typeof(RGBAColor));
 			
-			Mappings.Add("vector2", typeof(Vector2D));
-			Mappings.Add("vector3", typeof(Vector3D));
-			Mappings.Add("vector4", typeof(Vector4D));
 			Mappings.Add("vector2d", typeof(Vector2D));
 			Mappings.Add("vector3d", typeof(Vector3D));
 			Mappings.Add("vector4d", typeof(Vector4D));
-			
-			Mappings.Add("matrix", typeof(Matrix));
+            Mappings.Add("vector2", typeof(Vector2D));
+            Mappings.Add("vector3", typeof(Vector3D));
+            Mappings.Add("vector4", typeof(Vector4D));
+
+            Mappings.Add("matrix", typeof(Matrix));
 			Mappings.Add("matrix4", typeof(Matrix));
 			Mappings.Add("matrix4x4", typeof(Matrix));
 			Mappings.Add("transform", typeof(Matrix));
-			
-			Mappings.Add("raw", typeof(Stream));
-			Mappings.Add("stream", typeof(Stream));
+
+            Mappings.Add("stream", typeof(Stream));
+            Mappings.Add("raw", typeof(Stream));
 			Mappings.Add("struct", typeof(Struct));
 		}
 	}
