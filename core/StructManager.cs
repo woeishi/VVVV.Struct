@@ -21,6 +21,13 @@ namespace VVVV.Struct
                 if (!string.IsNullOrEmpty(node.FName[i]))
                     def.AddProperty(new Property(node.FName[i].Trim(), StructTypeMapper.Map(node.FDatatype[i].Trim()), node.FDefault[i].Trim()));
 
+            RegisterDefinition(def);
+
+            return def;
+        }
+
+        internal static void RegisterDefinition(Definition def)
+        {
             Definitions[def.Key] = def;
 
             //update enum
@@ -34,8 +41,6 @@ namespace VVVV.Struct
             {
                 handler(def.Key, def);
             }
-
-            return def;
         }
 
         /// <summary>
