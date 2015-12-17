@@ -16,45 +16,56 @@ namespace VVVV.Struct
 	#region PluginInfo
 	[PluginInfo(Name = "Definition", Category = "Struct", Help = "creates a struct definition", Author = "tonfilm, woei", AutoEvaluate = true, Tags = "")]
 	#endregion PluginInfo
-	public class StructDefinitionNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+	public class StructDefinitionNode : IPluginEvaluate, IPartImportsSatisfiedNotification, IDisposable
 	{
-		#region fields & pins
-		[Config("Struct Name", IsSingle = true)]
+        #region fields & pins
+        #pragma warning disable 649
+        [Config("Struct Name", IsSingle = true)]
 		public IDiffSpread<string> FConfigStructName;
 		[Input("Struct Name", IsSingle = true)]
-		public IDiffSpread<string> FStructNameIn;
+		IDiffSpread<string> FStructNameIn;
 		
 		[Config("Pin Type")]
-		public IDiffSpread<string> FConfigPinType;
+		public IDiffSpread<string> FDatatype;
 		[Input("Pin Type")]
-		public IDiffSpread<string> FPinTypeIn;
+		IDiffSpread<string> FPinTypeIn;
 		
 		[Config("Pin Name")]
-		public IDiffSpread<string> FConfigPinName;
+		public IDiffSpread<string> FName;
 		[Input("Pin Name")]
-		public IDiffSpread<string> FPinNameIn;
+		IDiffSpread<string> FPinNameIn;
 		
 		[Config("Pin Default")]
-		public IDiffSpread<string> FConfigPinDefault;
+		public IDiffSpread<string> FDefault;
 		[Input("Pin Default")]
-		public IDiffSpread<string> FPinDefaultIn;
+		IDiffSpread<string> FPinDefaultIn;
 		
 		
 		[Output("Definition")]
-		public ISpread<string> FLocalDef;
+		ISpread<string> FLocalDef;
 		
 		[Output("Pin Name")]
-		public ISpread<string> FLocalName;
+		ISpread<string> FLocalName;
 		
 		[Output("Pin Type")]
-		public ISpread<string> FLocalType;
+		ISpread<string> FLocalType;
 		
-		[Import()]
-		public ILogger FLogger;
-		#endregion fields & pins
-		
-		public void OnImportsSatisfied()
+        [Import()]
+        IPluginHost2 FHost;
+        #pragma warning restore
+
+        internal Definition FDefinition;
+        internal string FNodePath;
+
+        internal event EventHandler Disposing;
+        #endregion fields & pins
+
+        public void OnImportsSatisfied()
 		{
+            FNodePath = FHost.GetNodePath(false);
+
+            StructManager.Register(this);
+
             FLocalDef[0] = string.Empty;
             FLocalName.SliceCount = 0;
             FLocalType.SliceCount = 0;
@@ -62,9 +73,9 @@ namespace VVVV.Struct
             StructManager.DefinitionsChanged += SetLocalOutput;
 
             FConfigStructName.Changed += HandleDefinitionChanged;
-			FConfigPinName.Changed += HandleDefinitionChanged;
-			FConfigPinType.Changed += HandleDefinitionChanged;
-			FConfigPinDefault.Changed += HandleDefinitionChanged;
+			FName.Changed += HandleDefinitionChanged;
+			FDatatype.Changed += HandleDefinitionChanged;
+			FDefault.Changed += HandleDefinitionChanged;
 		}
 		
 		private void HandleDefinitionChanged(IDiffSpread<string> sender)
@@ -74,7 +85,7 @@ namespace VVVV.Struct
                 FLocalDef[0] = string.Empty;
                 FLocalName.SliceCount = 0;
                 FLocalType.SliceCount = 0;
-                StructManager.CreateDefinition(FConfigStructName[0], FConfigPinName, FConfigPinType, FConfigPinDefault);
+                FDefinition = StructManager.CreateDefinition(this);
             }
 		}
 		
@@ -90,6 +101,15 @@ namespace VVVV.Struct
                 }
             }
 		}
+
+        public void Dispose()
+        {
+            var handler = Disposing;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
 		
 		// Called when data for any output pin is requested.
 		public void Evaluate(int SpreadMax)
@@ -102,11 +122,11 @@ namespace VVVV.Struct
 				}
 			}
 			if (FPinTypeIn.IsChanged)
-				FConfigPinType.AssignFrom(FPinTypeIn);
+				FDatatype.AssignFrom(FPinTypeIn);
 			if (FPinNameIn.IsChanged)
-				FConfigPinName.AssignFrom(FPinNameIn);
+				FName.AssignFrom(FPinNameIn);
 			if (FPinDefaultIn.IsChanged)
-				FConfigPinDefault.AssignFrom(FPinDefaultIn);
+				FDefault.AssignFrom(FPinDefaultIn);
 		}
 	}
 }
