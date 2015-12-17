@@ -14,6 +14,7 @@ namespace VVVV.Struct
         public static Definition CreateDefinition(StructDefinitionNode node)
         {
             Definition def = new Definition(node.FConfigStructName[0]);
+            def.HandlerPath = node.FNodePath;
 
             int spreadmax = node.FName.CombineWith(node.FDatatype).CombineWith(node.FDefault);
             for (int i = 0; i < spreadmax; i++)

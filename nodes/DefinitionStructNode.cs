@@ -94,7 +94,7 @@ namespace VVVV.Struct
             if (definition.Key == FConfigStructName[0])
             {
                 FLocalDef[0] = definition.Key;
-                foreach (var property in definition.Properties)
+                foreach (var property in definition.Property)
                 {
                     FLocalName.Add(property.Name);
                     FLocalType.Add(property.Datatype.Name);

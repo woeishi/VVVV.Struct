@@ -3,36 +3,79 @@ using System.Collections.Generic;
 using VVVV.PluginInterfaces.V2;
 using VVVV.PluginInterfaces.V2.NonGeneric;
 
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+
 namespace VVVV.Struct
 {
-    public class Property
+    [DataContract]
+     public class Property
     {
+        [DataMember, XmlAttribute]
         public string Name;
+
+        string typestring;
+        [DataMember, XmlAttribute]
+        public string DatatypeString
+        {
+            get { return typestring; }
+            set { typestring = value; Datatype = StructTypeMapper.Map(value); }
+        }
+
+        [XmlIgnore]
         public Type Datatype;
+
+        [DataMember, XmlAttribute]
         public string Default;
+
+        public Property()
+        {
+            Name = string.Empty;
+            typestring = "double";
+            Datatype = typeof(double);
+            Default = string.Empty;
+        }
 
         public Property(string name, Type type, string defaultValue)
         {
             Name = name;
             Datatype = type;
+            foreach (var kv in StructTypeMapper.Mappings)
+            {
+                if (type == kv.Value)
+                {
+                    typestring = kv.Key;
+                    break;
+                }
+            }
             Default = defaultValue;
         }
     }
 
-	public class Definition : EventArgs
+    [DataContract]
+    public class Definition : EventArgs
 	{
+        [DataMember, XmlAttribute]
         public string Key;
-        public List<Property> Properties;
+        [DataMember, XmlElement]
+        public List<Property> Property;
+        [DataMember, XmlAttribute]
+        public string HandlerPath;
 
-		internal Definition(string key)
+        private Definition()
+        {
+            Property = new List<Property>();
+            Key = string.Empty;
+            HandlerPath = string.Empty;
+        }
+		internal Definition(string key):this()
 		{
             Key = key;
-            Properties = new List<Property>();
 		}
 		
         internal void AddProperty(Property property)
         {
-            Properties.Add(property);
+            Property.Add(property);
         }
 	}
 	

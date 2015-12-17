@@ -79,7 +79,7 @@ namespace VVVV.Struct
 		{
 			Struct s = new Struct(FStructDefName);
 			var pins =  new Dictionary<string,IIOContainer>();
-			foreach (var property in definition.Properties)
+			foreach (var property in definition.Property)
 			{
 				string key = property.Name+property.Datatype; 
 				if (FPins.ContainsKey(key))
