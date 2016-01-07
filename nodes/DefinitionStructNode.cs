@@ -85,7 +85,7 @@ namespace VVVV.Struct
                 FLocalDef[0] = string.Empty;
                 FLocalName.SliceCount = 0;
                 FLocalType.SliceCount = 0;
-                FDefinition = StructManager.CreateDefinition(this);
+                StructManager.CreateDefinition(this);
             }
 		}
 		

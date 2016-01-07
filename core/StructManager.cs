@@ -11,19 +11,27 @@ namespace VVVV.Struct
 	/// </summary>
 	public static class StructManager
 	{
-        public static Definition CreateDefinition(StructDefinitionNode node)
+        public static void CreateDefinition(StructDefinitionNode node)
         {
             Definition def = new Definition(node.FConfigStructName[0]);
-            def.HandlerPath = node.FNodePath;
+            def.SetHandlerPath(node);
 
             int spreadmax = node.FName.CombineWith(node.FDatatype).CombineWith(node.FDefault);
             for (int i = 0; i < spreadmax; i++)
                 if (!string.IsNullOrEmpty(node.FName[i]))
                     def.AddProperty(new Property(node.FName[i].Trim(), StructTypeMapper.Map(node.FDatatype[i].Trim()), node.FDefault[i].Trim()));
 
+            node.FDefinition = def;
+
             RegisterDefinition(def);
 
-            return def;
+        }
+
+        static void SetHandlerPath(this Definition def, StructDefinitionNode node)
+        {
+            var split = node.FNodePath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i=1; i<split.Length; i++)
+                def.HandlerPath += "/"+split[i];
         }
 
         internal static void RegisterDefinition(Definition def)
