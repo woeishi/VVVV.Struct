@@ -52,6 +52,7 @@
     <Reference Include="VVVV.Utils3rdParty" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="core\Serializer.cs" />
     <Compile Include="core\Struct.cs" />
     <Compile Include="core\StructManager.cs" />
     <Compile Include="core\StructTypeMapper.cs" />
