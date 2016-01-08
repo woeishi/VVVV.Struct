@@ -13,11 +13,16 @@ namespace VVVV.Struct
 {
 	public abstract class StructNode : IPluginEvaluate, IPartImportsSatisfiedNotification
 	{
-		#region fields & pins
-		[Config("Definition",  IsSingle = true, EnumName = "StructDefinitionNames")]
+        #region fields & pins
+        [Config("Cache")]
+        public IDiffSpread<string> FCache;
+        bool cacheLoaded;
+        bool cacheNeeded;
+
+        [Config("Definition",  IsSingle = true, EnumName = "StructDefinitionNames")]
 		public IDiffSpread<EnumEntry> FDefinitionIn;
-		
-		[Import()]
+
+        [Import()]
 		public IIOFactory FIOFactory;
 		
 		[Import()]
@@ -43,38 +48,68 @@ namespace VVVV.Struct
 		public void OnImportsSatisfied()
 		{
 			BaseOnImportSatisfied();
-			
+
+            FCache.Changed += CacheChanged;
 			StructManager.DefinitionsChanged += DefinitionsChanged;
 			FDefinitionIn.Changed += DefinitionSelectionChanged;
 		}
+
+        protected abstract void RefreshStruct(Struct str);
 		
-		protected abstract void RefreshStruct(Struct str);
-		
-		private void DefinitionsChanged(object sender,Definition definition)
+		private void DefinitionsChanged(object sender, Definition definition)
 		{
 			if ((FStructDefName == definition.Key)) //(FStructDefName != null) &&
 			{
 				UpdateDefinition(definition);
-			}
+                FHost.Status = StatusCode.None;
+            }
 		}
-		
-		private void DefinitionSelectionChanged(IDiffSpread<EnumEntry> sender)
-		{
-			string key = sender[0].Name;
-			FStructDefName = key;
-			if (StructManager.Definitions.ContainsKey(key))
-			{
-				var layout = StructManager.Definitions[FStructDefName];
-				UpdateDefinition(layout);
-			}
+
+        private void CacheChanged(IDiffSpread<string> spread)
+        {
+            if (!string.IsNullOrEmpty(spread[0])) //might be first changed event with no data yet
+            {
+                cacheLoaded = true;
+                FCache.Changed -= CacheChanged;
+                if (cacheNeeded) //node requested cached definition, but pin wasn't loaded yet
+                {
+                    cacheNeeded = false;
+                    LoadCachedDefinition();
+                }
+            }
+        }
+
+        private void DefinitionSelectionChanged(IDiffSpread<EnumEntry> sender)
+        {
+            string key = sender[0].Name;
+            if (StructManager.Definitions.ContainsKey(key))
+            {
+                UpdateDefinition(StructManager.Definitions[key]);
+                FHost.Status = StatusCode.None;
+            }
+            else if (cacheLoaded) //user cannot select a definition not present, so must be startup
+                LoadCachedDefinition();
+            else
+                cacheNeeded = true;
 		}
+
+        private void LoadCachedDefinition()
+        {
+            var s = new Serializer<Definition>();
+            Definition def = DefinitionSerializer.Read(FCache[0]);
+            
+            UpdateDefinition(def);
+            FHost.Status = StatusCode.HasInvalidData;
+        }
 		
 		private void UpdateDefinition(Definition definition)
 		{
+            FStructDefName = definition.Key;
+            FCache[0] = DefinitionSerializer.Write(definition);
 			var s = CreatePins(definition);
 			RefreshStruct(s);
 		}
-		
+
 		private Struct CreatePins(Definition definition)
 		{
 			Struct s = new Struct(FStructDefName);
