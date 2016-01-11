@@ -34,7 +34,7 @@ namespace VVVV.Struct
 		[Import()]
 		public IHDEHost FHDE;
 		
-		protected Dictionary<string,IIOContainer> FPins = new Dictionary<string,IIOContainer>();
+		protected Dictionary<Property,IIOContainer> FPins = new Dictionary<Property,IIOContainer>();
 		protected string FStructDefName;
 		private bool FIsJoin;
 		#endregion
@@ -113,21 +113,20 @@ namespace VVVV.Struct
 		private Struct CreatePins(Definition definition)
 		{
 			Struct s = new Struct(FStructDefName);
-			var pins =  new Dictionary<string,IIOContainer>();
+			var pins =  new Dictionary<Property,IIOContainer>();
 			foreach (var property in definition.Property)
 			{
-				string key = property.Name+property.Datatype; 
-				if (FPins.ContainsKey(key))
+                var binProperty = CreateBinSizeProperty(property);
+                if (FPins.ContainsKey(property))
 				{
-					pins.Add(key, FPins[key]);
-					s.Data.Add(key, FPins[key].RawIOObject);
-					FPins.Remove(key);
+					pins.Add(property, FPins[property]);
+					s.Data.Add(property, FPins[property].RawIOObject);
+					FPins.Remove(property);
 					
-					if (!FIsJoin) //create output bin size
+					if (!FIsJoin) //don't forget output bin size
 					{
-						string binKey = "Bin"+key;
-						pins.Add(binKey, FPins[binKey]);
-						FPins.Remove(binKey);
+                        pins.Add(binProperty, FPins[binProperty]);
+						FPins.Remove(binProperty);
 					}
 				}
 				else
@@ -136,24 +135,24 @@ namespace VVVV.Struct
 					IOAttribute attr;
 					if (FIsJoin)
 					{
-						attr = new InputAttribute(property.Name);
+                        attr = new InputAttribute(property.Name);
 						attr = StructUtils.TrySetDefault(attr as InputAttribute, property.Datatype, property.Default.ToString());
 					}
 					else
 						attr = new OutputAttribute(property.Name);
-					
+
 					var pin = FIOFactory.CreateIOContainer(pinType, attr);
-					pins.Add(key,pin);
-					s.Data.Add(key, pin.RawIOObject);
+					pins.Add(property,pin);
+					s.Data.Add(property, pin.RawIOObject);
 
 					if (!FIsJoin) //create output bin size
 					{
-						attr.Name = attr.Name + " Bin Size";
-						attr.Visibility = PinVisibility.OnlyInspector;
-						pinType = typeof(ISpread<>).MakeGenericType(typeof(int));
-						pins.Add("Bin"+key,FIOFactory.CreateIOContainer(pinType,attr));
-					}
-				}
+                        attr.Name = binProperty.Name;
+                        attr.Visibility = PinVisibility.OnlyInspector;
+                        pinType = typeof(ISpread<>).MakeGenericType(binProperty.Datatype);
+                        pins.Add(binProperty, FIOFactory.CreateIOContainer(pinType, attr));
+                    }
+                }
 			}
 			
 			foreach (var oldPin in FPins.Values)
@@ -162,6 +161,14 @@ namespace VVVV.Struct
 			FPins = pins;
 			return s;
 		}
+
+        protected Property CreateBinSizeProperty(Property property)
+        {
+            var result = new Property();
+            result.Name = property.Name + " Bin Size";
+            result.DatatypeString = "int";
+            return result;
+        }
 		
 		/// <summary>
 		/// issues HDEHost to set a descriptiv name; hack, since Labelpin doesn't work 
@@ -186,12 +193,12 @@ namespace VVVV.Struct
 	#endregion PluginInfo
 	public class StructJoinNode : StructNode,  IPartImportsSatisfiedNotification
 	{
-		#region fields & pins
-		[Output("Output")]
+        #region fields & pins
+        [Output("Output")]
 		public ISpread<Struct> FOutput;
-		
-		#endregion fields & pins
-		public StructJoinNode() : base(true) {}
+        
+        #endregion fields & pins
+        public StructJoinNode() : base(true) {}
 		
 		protected override void BaseOnImportSatisfied()
 		{
@@ -225,24 +232,24 @@ namespace VVVV.Struct
 		protected override void BaseOnImportSatisfied() {}
 		protected override void RefreshStruct(Struct str) {}
 		
-		private void WriteOutputs(Dictionary<string,object> data)
+		private void WriteOutputs(Dictionary<Property,object> data)
 		{
 			foreach(var entry in data)
 			{
-				var inPin = entry.Value as ISpread;
-				var outPin = FPins[entry.Key].RawIOObject as ISpread;
-				int offset = outPin.SliceCount;
-				outPin.SliceCount += inPin.SliceCount;
-				for (int i=0; i<inPin.SliceCount; i++)
-					outPin[i+offset] = inPin[i];
-				
-				//set Bin Size
-				var binOutPin = FPins["Bin"+entry.Key].RawIOObject as ISpread;
-				binOutPin.SliceCount += 1;
+                var inPin = entry.Value as ISpread;
+                var outPin = FPins[entry.Key].RawIOObject as ISpread;
+                int offset = outPin.SliceCount;
+                outPin.SliceCount += inPin.SliceCount;
+                for (int i = 0; i < inPin.SliceCount; i++)
+                    outPin[i + offset] = inPin[i];
+
+                //set Bin Size
+                var binOutPin = FPins[CreateBinSizeProperty(entry.Key)].RawIOObject as ISpread;
+                binOutPin.SliceCount += 1;
 				binOutPin[binOutPin.SliceCount-1] = inPin.SliceCount;
 			}
 		}
-		
+
 		protected override void BaseEvaluate(int spreadMax)
 		{
 			if (FInput.SliceCount>0)
@@ -256,8 +263,8 @@ namespace VVVV.Struct
 					
 					if (hits.Count>0)
 					{
-						foreach (var pin in FPins)
-							(pin.Value.RawIOObject as ISpread).SliceCount = 0;
+                        foreach (var pin in FPins)
+                            (pin.Value.RawIOObject as ISpread).SliceCount = 0;
 						
 						if (FMatch[0].Index == 0)
 							WriteOutputs(FInput[hits[0]].Data);
