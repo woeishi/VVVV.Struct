@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace VVVV.Struct
 {
     [DataContract]
-    public class Property
+    public class Property : IEquatable<Property>
     {
         [DataMember, XmlAttribute]
         public string Name;
@@ -47,6 +47,26 @@ namespace VVVV.Struct
                 }
             }
             Default = defaultValue;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Property)
+                return Equals((Property)obj);
+            else
+                return false;
+        }
+
+        public bool Equals(Property other)
+        {
+            return
+                this.Name == other.Name &&
+                this.Datatype == other.Datatype;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode() ^ this.Datatype.GetHashCode();
         }
     }
 
