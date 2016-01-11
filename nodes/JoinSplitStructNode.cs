@@ -114,20 +114,25 @@ namespace VVVV.Struct
 		{
 			Struct s = new Struct(FStructDefName);
 			var pins =  new Dictionary<Property,IIOContainer>();
+            int order = 0;
 			foreach (var property in definition.Property)
 			{
                 var binProperty = CreateBinSizeProperty(property);
                 if (FPins.ContainsKey(property))
 				{
-					pins.Add(property, FPins[property]);
+                    FPins[property].GetPluginIO().Order = order;
+                    pins.Add(property, FPins[property]);
 					s.Data.Add(property, FPins[property].RawIOObject);
 					FPins.Remove(property);
-					
-					if (!FIsJoin) //don't forget output bin size
+                    order++;
+
+                    if (!FIsJoin) //don't forget output bin size
 					{
+                        FPins[binProperty].GetPluginIO().Order = order;
                         pins.Add(binProperty, FPins[binProperty]);
 						FPins.Remove(binProperty);
 					}
+                    order++;
 				}
 				else
 				{
@@ -141,17 +146,20 @@ namespace VVVV.Struct
 					else
 						attr = new OutputAttribute(property.Name);
 
+                    attr.Order = order;
 					var pin = FIOFactory.CreateIOContainer(pinType, attr);
 					pins.Add(property,pin);
 					s.Data.Add(property, pin.RawIOObject);
-
+                    order++;
 					if (!FIsJoin) //create output bin size
 					{
                         attr.Name = binProperty.Name;
+                        attr.Order = order;
                         attr.Visibility = PinVisibility.OnlyInspector;
                         pinType = typeof(ISpread<>).MakeGenericType(binProperty.Datatype);
                         pins.Add(binProperty, FIOFactory.CreateIOContainer(pinType, attr));
                     }
+                    order++;
                 }
 			}
 			
