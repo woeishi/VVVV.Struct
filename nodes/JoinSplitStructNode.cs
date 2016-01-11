@@ -55,15 +55,16 @@ namespace VVVV.Struct
 		}
 
         protected abstract void RefreshStruct(Struct str);
-		
-		private void DefinitionsChanged(object sender, Definition definition)
-		{
-			if ((FStructDefName == definition.Key)) //(FStructDefName != null) &&
-			{
-				UpdateDefinition(definition);
-                FHost.Status = StatusCode.None;
-            }
-		}
+
+        #region Definition cache
+        private void LoadCachedDefinition()
+        {
+            var s = new Serializer<Definition>();
+            Definition def = DefinitionSerializer.Read(FCache[0]);
+
+            UpdateDefinition(def);
+            FHost.Status = StatusCode.HasInvalidData;
+        }
 
         private void CacheChanged(IDiffSpread<string> spread)
         {
@@ -78,6 +79,16 @@ namespace VVVV.Struct
                 }
             }
         }
+        #endregion Definition cache
+
+        private void DefinitionsChanged(object sender, Definition definition)
+		{
+			if ((FStructDefName == definition.Key)) //(FStructDefName != null) &&
+			{
+				UpdateDefinition(definition);
+                FHost.Status = StatusCode.None;
+            }
+		}
 
         private void DefinitionSelectionChanged(IDiffSpread<EnumEntry> sender)
         {
@@ -93,15 +104,6 @@ namespace VVVV.Struct
                 cacheNeeded = true;
 		}
 
-        private void LoadCachedDefinition()
-        {
-            var s = new Serializer<Definition>();
-            Definition def = DefinitionSerializer.Read(FCache[0]);
-            
-            UpdateDefinition(def);
-            FHost.Status = StatusCode.HasInvalidData;
-        }
-		
 		private void UpdateDefinition(Definition definition)
 		{
             FStructDefName = definition.Key;
