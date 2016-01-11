@@ -44,17 +44,16 @@ namespace VVVV.Struct
 			FIsJoin = isJoin;
 		}
 		
-		protected abstract void BaseOnImportSatisfied();
-		public void OnImportsSatisfied()
+		public virtual void OnImportsSatisfied()
 		{
-			BaseOnImportSatisfied();
-
             FCache.Changed += CacheChanged;
 			StructManager.DefinitionsChanged += DefinitionsChanged;
 			FDefinitionIn.Changed += DefinitionSelectionChanged;
 		}
 
         protected abstract void RefreshStruct(Struct str);
+
+        public virtual void Evaluate(int spreadMax) { }
 
         #region Definition cache
         private void LoadCachedDefinition()
@@ -189,19 +188,12 @@ namespace VVVV.Struct
 			string xml = string.Format("<PATCH><NODE id=\"{0}\"><PIN pinname=\"Descriptive Name\" values=\"{1}\"></PIN></NODE></PATCH>",FHost.GetID(), key);
 			FHDE.SendXMLSnippet(FHost.ParentNode.GetNodeInfo().Filename,xml,true);
 		}
-		
-		protected abstract void BaseEvaluate(int spreadmax);
-		public void Evaluate(int spreadMax)
-		{
-			BaseEvaluate(spreadMax);
-		}
-		
 	}
 	
 	#region PluginInfo
 	[PluginInfo(Name = "Join", Category = "Struct", Help = "creates inputs along the selected definition", Author = "woei", AutoEvaluate = true, Tags = "")]
 	#endregion PluginInfo
-	public class StructJoinNode : StructNode,  IPartImportsSatisfiedNotification
+	public class StructJoinNode : StructNode
 	{
         #region fields & pins
         [Output("Output")]
@@ -210,22 +202,22 @@ namespace VVVV.Struct
         #endregion fields & pins
         public StructJoinNode() : base(true) {}
 		
-		protected override void BaseOnImportSatisfied()
+		public override void OnImportsSatisfied()
 		{
 			FOutput[0] = null;
+            base.OnImportsSatisfied();
 		}
+
 		protected override void RefreshStruct(Struct str)
 		{
 			FOutput[0] = str;
 		}
-		
-		protected override void BaseEvaluate(int spreadMax) {}
 	}
 	
 	#region PluginInfo
 	[PluginInfo(Name = "Split", Category = "Struct", Help = "creates inputs along the selected definition", Author = "woei", AutoEvaluate = true, Tags = "")]
 	#endregion PluginInfo
-	public class StructSplitNode : StructNode,  IPartImportsSatisfiedNotification
+	public class StructSplitNode : StructNode
 	{
 		#region fields & pins
 		[Input("Input")]
@@ -239,7 +231,6 @@ namespace VVVV.Struct
 		#endregion fields & pins
 		public StructSplitNode() : base(false) {}
 	
-		protected override void BaseOnImportSatisfied() {}
 		protected override void RefreshStruct(Struct str) {}
 		
 		private void WriteOutputs(Dictionary<Property,object> data)
@@ -260,7 +251,7 @@ namespace VVVV.Struct
 			}
 		}
 
-		protected override void BaseEvaluate(int spreadMax)
+		public override void Evaluate(int spreadMax)
 		{
 			if (FInput.SliceCount>0)
 			{
