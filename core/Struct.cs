@@ -105,13 +105,13 @@ namespace VVVV.Struct
 		private string key;
 		public string Key { get { return key; } }
 
-		private Dictionary<string,object> data;
-		public Dictionary<string,object> Data { get { return data; } }
+		private Dictionary<Property,object> data;
+		public Dictionary<Property,object> Data { get { return data; } }
 		
 		public Struct(string name)
 		{
 			key = name;
-			data = new Dictionary<string,object>();
+			data = new Dictionary<Property,object>();
 		}
 	}
 }
