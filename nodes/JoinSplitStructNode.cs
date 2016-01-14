@@ -14,7 +14,7 @@ namespace VVVV.Struct
 	public abstract class StructNode : IPluginEvaluate, IPartImportsSatisfiedNotification
 	{
         #region fields & pins
-        [Config("Cache")]
+        [Config("Definition XML Cache")]
         public IDiffSpread<string> FCache;
         bool cacheLoaded;
         bool cacheNeeded;
