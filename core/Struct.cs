@@ -91,9 +91,15 @@ namespace VVVV.Struct
             Key = key;
 		}
 		
-        internal void AddProperty(Property property)
+        internal bool TryAddProperty(Property property)
         {
-            Property.Add(property);
+            bool nameExists = false;
+            foreach (var p in Property)
+                if (p.Name == property.Name)
+                    nameExists = true;
+            if (!nameExists)
+                Property.Add(property);
+            return !nameExists;
         }
 	}
 	

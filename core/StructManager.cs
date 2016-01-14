@@ -19,7 +19,7 @@ namespace VVVV.Struct
             int spreadmax = node.FName.CombineWith(node.FDatatype).CombineWith(node.FDefault);
             for (int i = 0; i < spreadmax; i++)
                 if (!string.IsNullOrEmpty(node.FName[i]))
-                    def.AddProperty(new Property(node.FName[i].Trim(), StructTypeMapper.Map(node.FDatatype[i].Trim()), node.FDefault[i].Trim()));
+                    def.TryAddProperty(new Property(node.FName[i].Trim(), StructTypeMapper.Map(node.FDatatype[i].Trim()), node.FDefault[i].Trim()));
 
             node.FDefinition = def;
 
