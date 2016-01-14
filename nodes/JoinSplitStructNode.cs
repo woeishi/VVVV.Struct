@@ -135,8 +135,8 @@ namespace VVVV.Struct
 					}
                     order++;
 				}
-				else
-				{
+                else if (!pins.ContainsKey(property))
+                {
 					Type pinType = typeof(ISpread<>).MakeGenericType(property.Datatype);
 					IOAttribute attr;
 					if (FIsJoin)
@@ -162,6 +162,8 @@ namespace VVVV.Struct
                     }
                     order++;
                 }
+                else
+                    System.Diagnostics.Debug.WriteLine("Pin creation weirdness at " + FHost.GetNodePath(false));
 			}
 			
 			foreach (var oldPin in FPins.Values)
