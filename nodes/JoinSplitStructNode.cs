@@ -92,15 +92,18 @@ namespace VVVV.Struct
         private void DefinitionSelectionChanged(IDiffSpread<EnumEntry> sender)
         {
             string key = sender[0].Name;
-            if (StructManager.Definitions.ContainsKey(key))
+            if (key != null)
             {
-                UpdateDefinition(StructManager.Definitions[key]);
-                FHost.Status = StatusCode.None;
+                if (StructManager.Definitions.ContainsKey(key))
+                {
+                    UpdateDefinition(StructManager.Definitions[key]);
+                    FHost.Status = StatusCode.None;
+                }
+                else if (cacheLoaded) //user cannot select a definition not present, so must be startup
+                    LoadCachedDefinition();
+                else
+                    cacheNeeded = true;
             }
-            else if (cacheLoaded) //user cannot select a definition not present, so must be startup
-                LoadCachedDefinition();
-            else
-                cacheNeeded = true;
 		}
 
 		private void UpdateDefinition(Definition definition)
