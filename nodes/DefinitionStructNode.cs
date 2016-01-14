@@ -20,22 +20,22 @@ namespace VVVV.Struct
 	{
         #region fields & pins
         #pragma warning disable 649
-        [Config("Struct Name", IsSingle = true)]
+        [Config("Struct Name Cache", IsSingle = true, Visibility = PinVisibility.False)]
 		public IDiffSpread<string> FConfigStructName;
 		[Input("Struct Name", IsSingle = true)]
 		IDiffSpread<string> FStructNameIn;
 		
-		[Config("Pin Type")]
+		[Config("Pin Type Cache", Visibility = PinVisibility.False)]
 		public IDiffSpread<string> FDatatype;
 		[Input("Pin Type")]
 		IDiffSpread<string> FPinTypeIn;
 		
-		[Config("Pin Name")]
+		[Config("Pin Name Cache", Visibility = PinVisibility.False)]
 		public IDiffSpread<string> FName;
 		[Input("Pin Name")]
 		IDiffSpread<string> FPinNameIn;
 		
-		[Config("Pin Default")]
+		[Config("Pin Default", Visibility = PinVisibility.False)]
 		public IDiffSpread<string> FDefault;
 		[Input("Pin Default")]
 		IDiffSpread<string> FPinDefaultIn;
