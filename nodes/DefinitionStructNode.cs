@@ -52,6 +52,9 @@ namespace VVVV.Struct
 		
         [Import()]
         IPluginHost2 FHost;
+
+        [Import()]
+        IHDEHost FHDE;
         #pragma warning restore
 
         internal Definition FDefinition;
@@ -72,22 +75,34 @@ namespace VVVV.Struct
 
             StructManager.DefinitionsChanged += SetLocalOutput;
 
-            FConfigStructName.Changed += HandleDefinitionChanged;
-			FName.Changed += HandleDefinitionChanged;
-			FDatatype.Changed += HandleDefinitionChanged;
-			FDefault.Changed += HandleDefinitionChanged;
-		}
-		
-		private void HandleDefinitionChanged(IDiffSpread<string> sender)
-		{
-            if (FConfigStructName[0] != "")
+            FConfigStructName.Changed += DefinitionPinshanged;
+            FName.Changed += DefinitionPinshanged;
+            FDatatype.Changed += DefinitionPinshanged;
+            FDefault.Changed += DefinitionPinshanged;
+
+            FHDE.MainLoop.OnPrepareGraph += MainLoop_OnPrepareGraph;
+        }
+
+        private void DefinitionPinshanged(IDiffSpread<string> sender)
+        {
+            if (!string.IsNullOrEmpty(FConfigStructName[0]) &&
+                FName != null &&
+                FDatatype != null &&
+                FDefault != null)
             {
-                FLocalDef[0] = string.Empty;
-                FLocalName.SliceCount = 0;
-                FLocalType.SliceCount = 0;
                 StructManager.CreateDefinition(this);
             }
-		}
+        }
+
+        private void MainLoop_OnPrepareGraph(object sender, EventArgs e)
+        {
+            FConfigStructName.Changed -= DefinitionPinshanged;
+            FName.Changed -= DefinitionPinshanged;
+            FDatatype.Changed -= DefinitionPinshanged;
+            FDefault.Changed -= DefinitionPinshanged;
+
+            FHDE.MainLoop.OnPrepareGraph -= MainLoop_OnPrepareGraph;
+        }
 		
 		private void SetLocalOutput(object sender, Definition definition)
 		{
@@ -113,20 +128,41 @@ namespace VVVV.Struct
 		
 		// Called when data for any output pin is requested.
 		public void Evaluate(int SpreadMax)
-		{
-			if (FStructNameIn.IsChanged && FStructNameIn.SliceCount!=0)
-			{
-				if (!string.IsNullOrEmpty(FStructNameIn[0]))
-				{
-					FConfigStructName[0] = FStructNameIn[0];
-				}
-			}
-			if (FPinTypeIn.IsChanged)
-				FDatatype.AssignFrom(FPinTypeIn);
-			if (FPinNameIn.IsChanged)
-				FName.AssignFrom(FPinNameIn);
-			if (FPinDefaultIn.IsChanged)
-				FDefault.AssignFrom(FPinDefaultIn);
-		}
-	}
+        {
+            bool definitionChanged = false;
+            if (FPinTypeIn.IsChanged)
+            {
+                FDatatype.AssignFrom(FPinTypeIn);
+                definitionChanged = true;
+            }
+            if (FPinNameIn.IsChanged)
+            {
+                FName.AssignFrom(FPinNameIn);
+                definitionChanged = true;
+            }
+            if (FPinDefaultIn.IsChanged)
+            {
+                FDefault.AssignFrom(FPinDefaultIn);
+                definitionChanged = true;
+            }
+            if (FStructNameIn.IsChanged && FStructNameIn.SliceCount != 0)
+            {
+                if (!string.IsNullOrEmpty(FStructNameIn[0]))
+                {
+                    FConfigStructName[0] = FStructNameIn[0];
+                    definitionChanged = true;
+                }
+            }
+            if (definitionChanged)
+                SetDefinition();
+        }
+
+        void SetDefinition()
+        {
+            FLocalDef[0] = string.Empty;
+            FLocalName.SliceCount = 0;
+            FLocalType.SliceCount = 0;
+            StructManager.CreateDefinition(this);
+        }
+    }
 }
