@@ -74,7 +74,7 @@ namespace VVVV.Struct
         /// <summary>
         /// all struct definitions
         /// </summary>
-        public static Dictionary<string, Definition> Definitions = new Dictionary<string, Definition>();
+        public static Dictionary<string, Definition> Definitions = new Dictionary<string, Definition> { { "Ø", new Definition("Ø") } };
 		
 		/// <summary>
 		/// fires when AddStructDefinition was called
