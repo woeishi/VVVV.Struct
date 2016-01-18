@@ -61,7 +61,8 @@ namespace VVVV.Struct
             var s = new Serializer<Definition>();
             Definition def = DefinitionSerializer.Read(FCache[0]);
 
-            UpdateDefinition(def);
+            if (def != null)
+                UpdateDefinition(def);
             FHost.Status = StatusCode.HasInvalidData;
         }
 
@@ -74,7 +75,11 @@ namespace VVVV.Struct
                 if (cacheNeeded) //node requested cached definition, but pin wasn't loaded yet
                 {
                     cacheNeeded = false;
-                    LoadCachedDefinition();
+                    //since loading from cache is delayed as well, definition could be up already
+                    if (FDefinitionIn[0] != null && StructManager.Definitions.ContainsKey(FDefinitionIn[0].Name))
+                        UpdateDefinition(StructManager.Definitions[FDefinitionIn[0].Name]);
+                    else
+                        LoadCachedDefinition();
                 }
             }
         }
