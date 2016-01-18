@@ -35,7 +35,7 @@ namespace VVVV.Struct
 		[Input("Pin Name")]
 		IDiffSpread<string> FPinNameIn;
 		
-		[Config("Pin Default", Visibility = PinVisibility.False)]
+		[Config("Pin Default Cache", Visibility = PinVisibility.False)]
 		public IDiffSpread<string> FDefault;
 		[Input("Pin Default")]
 		IDiffSpread<string> FPinDefaultIn;
