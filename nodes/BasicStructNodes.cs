@@ -48,7 +48,14 @@ namespace VVVV.Struct
 				
 				for (int i=0; i<FInput.SliceCount; i++)
 				{
-					FName[i]= FInput[i].Key;
+                    try
+                    {
+                        FName[i] = FInput[i].Key;
+                    }
+                    catch
+                    {
+                        FName[i] = "";
+                    }
 				}
 				
 			}
