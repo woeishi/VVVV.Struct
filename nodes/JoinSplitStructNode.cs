@@ -206,21 +206,40 @@ namespace VVVV.Struct
 	public class StructJoinNode : StructNode
 	{
         #region fields & pins
+        [Input("Enabled", Order = int.MaxValue, IsSingle = true, DefaultBoolean = true, Visibility = PinVisibility.OnlyInspector)]
+        public IDiffSpread<bool> FEnabled;
+
         [Output("Output")]
 		public ISpread<Struct> FOutput;
-        
+
+        Struct FStruct;
+
         #endregion fields & pins
         public StructJoinNode() : base(true) {}
 		
 		public override void OnImportsSatisfied()
 		{
 			FOutput[0] = null;
+            FEnabled.Changed += FEnabled_Changed;
             base.OnImportsSatisfied();
 		}
 
-		protected override void RefreshStruct(Struct str)
+        private void FEnabled_Changed(IDiffSpread<bool> spread)
+        {
+            if (spread.SliceCount > 0 && spread[0])
+            {
+                FOutput.SliceCount = 1;
+                FOutput[0] = FStruct;
+            }
+            else
+                FOutput.SliceCount = 0;
+        }
+
+        protected override void RefreshStruct(Struct str)
 		{
-			FOutput[0] = str;
+            FStruct = str;
+            if (FEnabled.SliceCount > 0 && FEnabled[0])
+			    FOutput[0] = str;
 		}
 	}
 	
