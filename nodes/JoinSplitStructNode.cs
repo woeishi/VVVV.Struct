@@ -251,12 +251,17 @@ namespace VVVV.Struct
 		#region fields & pins
 		[Input("Input")]
 		public ISpread<Struct> FInput;
-		
-		[Input("Match", EnumName="OccurenceMode", IsSingle = true)]
+
+        [Input("Hold Last", DefaultBoolean = true, IsSingle = true, Visibility = PinVisibility.OnlyInspector)]
+        public IDiffSpread<bool> FHold;
+
+        [Input("Match", EnumName="OccurenceMode", IsSingle = true)]
 		public ISpread<EnumEntry> FMatch;
 		
 		[Output("Status", Order = int.MaxValue, Visibility = PinVisibility.OnlyInspector)]
 		public ISpread<string> FStatus;
+
+        bool FHasData = true;
 		#endregion fields & pins
 		public StructSplitNode() : base(false) {}
 	
@@ -282,6 +287,7 @@ namespace VVVV.Struct
 
 		public override void Evaluate(int spreadMax)
 		{
+            bool hasData = false;
 			if (FInput.SliceCount>0)
 			{
 				if ((FInput[0] != null) && (!string.IsNullOrEmpty(FStructDefName)))
@@ -290,28 +296,48 @@ namespace VVVV.Struct
 					for (int i=0; i<FInput.SliceCount; i++)
 						if (FInput[i]!=null && FInput[i].Key == FStructDefName)
 							hits.Add(i);
-					
-					if (hits.Count>0)
-					{
+
+                    if (hits.Count > 0)
+                    {
                         foreach (var pin in FPins)
                             (pin.Value.RawIOObject as ISpread).SliceCount = 0;
-						
-						if (FMatch[0].Index == 0)
-							WriteOutputs(FInput[hits[0]].Data);
-						else if (FMatch[0].Index == 1)
-							WriteOutputs(FInput[hits[hits.Count-1]].Data);
-						else
-							foreach (int id in hits)
-								WriteOutputs(FInput[id].Data);
-						
-						FStatus[0] = "OK";
-					}
-					else
-						FStatus[0] = "No matching Definition";
+
+                        if (FMatch[0].Index == 0)
+                            WriteOutputs(FInput[hits[0]].Data);
+                        else if (FMatch[0].Index == 1)
+                            WriteOutputs(FInput[hits[hits.Count - 1]].Data);
+                        else
+                            foreach (int id in hits)
+                                WriteOutputs(FInput[id].Data);
+
+                        FStatus[0] = "OK";
+                        hasData = true;
+                    }
+                    else
+                        FStatus[0] = "No matching Definition";
 				}
 				else
 					FStatus[0] = "Input null";
 			}
+
+            if (hasData != FHasData || FHold.IsChanged)
+            {
+                FHasData = hasData;
+                if ((!FHasData) && (!FHold[0]))
+                {
+                    foreach (var pin in FPins)
+                    {
+                        if (pin.Key.Name.Contains(" Bin Size"))
+                        {
+                            var spread = (pin.Value.RawIOObject as ISpread);
+                            spread.SliceCount = 1;
+                            spread[0] = 0;
+                        }
+                        else
+                            (pin.Value.RawIOObject as ISpread).SliceCount = 0;
+                    }
+                }
+            }
 		}
 	}
 }
