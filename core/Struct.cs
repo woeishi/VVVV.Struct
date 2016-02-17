@@ -61,12 +61,13 @@ namespace VVVV.Struct
         {
             return
                 this.Name == other.Name &&
-                this.Datatype == other.Datatype;
+                this.Datatype == other.Datatype &&
+                this.Default == other.Default;
         }
 
         public override int GetHashCode()
         {
-            return this.Name.GetHashCode() ^ this.Datatype.GetHashCode();
+            return this.Name.GetHashCode() ^ this.Datatype.GetHashCode() ^ this.Default.GetHashCode();
         }
     }
 
