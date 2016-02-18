@@ -146,29 +146,33 @@ namespace VVVV.Struct
                 else if (!pins.ContainsKey(property))
                 {
 					Type pinType = typeof(ISpread<>).MakeGenericType(property.Datatype);
-					IOAttribute attr;
-					if (FIsJoin)
-					{
-                        attr = new InputAttribute(property.Name);
-						attr = StructUtils.TrySetDefault(attr as InputAttribute, property.Datatype, property.Default.ToString());
-					}
-					else
-						attr = new OutputAttribute(property.Name);
+                    IIOContainer pin;
 
-                    attr.Order = order;
-					var pin = FIOFactory.CreateIOContainer(pinType, attr);
+                    if (FIsJoin)
+                    {
+                        var inAttr = new InputAttribute(property.Name);
+                        inAttr.Order = order;
+                        inAttr = (InputAttribute)StructUtils.TrySetDefault(inAttr, property.Datatype, property.Default.ToString());
+                        inAttr.AutoValidate = false;
+                        pin = FIOFactory.CreateIOContainer(pinType, inAttr);
+                    }
+                    else
+                    {
+                        var outAttr = new OutputAttribute(property.Name);
+                        outAttr.Order = order;
+                        pin = FIOFactory.CreateIOContainer(pinType, outAttr);
+
+                        //create bin size pin herer
+                        outAttr.Name = binProperty.Name;
+                        outAttr.Order = order+1;
+                        outAttr.Visibility = PinVisibility.OnlyInspector;
+                        pinType = typeof(ISpread<>).MakeGenericType(binProperty.Datatype);
+                        pins.Add(binProperty, FIOFactory.CreateIOContainer(pinType, outAttr));
+                    }
+					 
 					pins.Add(property,pin);
 					s.Data.Add(property, pin.RawIOObject);
-                    order++;
-					if (!FIsJoin) //create output bin size
-					{
-                        attr.Name = binProperty.Name;
-                        attr.Order = order;
-                        attr.Visibility = PinVisibility.OnlyInspector;
-                        pinType = typeof(ISpread<>).MakeGenericType(binProperty.Datatype);
-                        pins.Add(binProperty, FIOFactory.CreateIOContainer(pinType, attr));
-                    }
-                    order++;
+                    order+=2;
                 }
                 else
                     System.Diagnostics.Debug.WriteLine("Pin creation weirdness at " + FHost.GetNodePath(false));
@@ -239,9 +243,16 @@ namespace VVVV.Struct
 		{
             FStruct = str;
             if (FEnabled.SliceCount > 0 && FEnabled[0])
-			    FOutput[0] = str;
+                FOutput[0] = str;
 		}
-	}
+
+        public override void Evaluate(int spreadMax)
+        {
+            if (FEnabled.SliceCount > 0 && FEnabled[0])
+                foreach (var pin in FPins)
+                    (pin.Value.RawIOObject as ISpread).Sync();
+        }
+    }
 	
 	#region PluginInfo
 	[PluginInfo(Name = "Split", Category = "Struct", Help = "creates inputs along the selected definition", Author = "woei", AutoEvaluate = true, Tags = "")]
