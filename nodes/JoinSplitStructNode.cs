@@ -275,8 +275,14 @@ namespace VVVV.Struct
         bool FHasData = true;
 		#endregion fields & pins
 		public StructSplitNode() : base(false) {}
-	
-		protected override void RefreshStruct(Struct str) {}
+
+        public override void OnImportsSatisfied()
+        {
+            ClearPins();
+            base.OnImportsSatisfied();
+        }
+
+        protected override void RefreshStruct(Struct str) {}
 		
 		private void WriteOutputs(Dictionary<Property,object> data)
 		{
@@ -295,6 +301,21 @@ namespace VVVV.Struct
 				binOutPin[binOutPin.SliceCount-1] = inPin.SliceCount;
 			}
 		}
+
+        void ClearPins()
+        {
+            foreach (var pin in FPins)
+            {
+                if (pin.Key.Name.Contains(" Bin Size"))
+                {
+                    var spread = (pin.Value.RawIOObject as ISpread);
+                    spread.SliceCount = 1;
+                    spread[0] = 0;
+                }
+                else
+                    (pin.Value.RawIOObject as ISpread).SliceCount = 0;
+            }
+        }
 
 		public override void Evaluate(int spreadMax)
 		{
@@ -336,17 +357,7 @@ namespace VVVV.Struct
                 FHasData = hasData;
                 if ((!FHasData) && (!FHold[0]))
                 {
-                    foreach (var pin in FPins)
-                    {
-                        if (pin.Key.Name.Contains(" Bin Size"))
-                        {
-                            var spread = (pin.Value.RawIOObject as ISpread);
-                            spread.SliceCount = 1;
-                            spread[0] = 0;
-                        }
-                        else
-                            (pin.Value.RawIOObject as ISpread).SliceCount = 0;
-                    }
+                    ClearPins();
                 }
             }
 		}
