@@ -147,7 +147,8 @@ namespace VVVV.Struct
             }
             if (FStructNameIn.IsChanged && FStructNameIn.SliceCount != 0)
             {
-                if (!string.IsNullOrEmpty(FStructNameIn[0]))
+                if (!string.IsNullOrEmpty(FStructNameIn[0]) &&
+                    FStructNameIn[0] != FConfigStructName[0])
                 {
                     FConfigStructName[0] = FStructNameIn[0];
                     definitionChanged = true;
@@ -162,7 +163,9 @@ namespace VVVV.Struct
             FLocalDef[0] = string.Empty;
             FLocalName.SliceCount = 0;
             FLocalType.SliceCount = 0;
-            if (!string.IsNullOrEmpty(FConfigStructName[0]))
+            if (!string.IsNullOrEmpty(FConfigStructName[0]) &&
+                FStructNameIn.SliceCount != 0 &&
+                FConfigStructName[0] == FStructNameIn[0])
                 StructManager.CreateDefinition(this);
         }
     }
