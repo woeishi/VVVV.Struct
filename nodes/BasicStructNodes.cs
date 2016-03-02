@@ -13,10 +13,10 @@ namespace VVVV.Struct
 	#region PluginInfo
 	[PluginInfo(Name = "Info", 
 				Category = "Struct", 
-				Help = "Basic template with a dynamic amount of in- and outputs", 
-				Tags = "")]
+				Help = "outputs basic information on the incoming structs", 
+				Author = "woei")]
 	#endregion PluginInfo
-	public class InfoNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+	public class InfoNode : IPluginEvaluate
 	{
 		#region fields & pins
 		[Input("Input")]
@@ -24,111 +24,71 @@ namespace VVVV.Struct
 
 		[Output("Struct Name")]
 		public ISpread<string> FName;
-		#endregion fields & pins
 
-		public void OnImportsSatisfied()
+        [Output("Source Node Path")]
+        public ISpread<string> FSrcNodePath;
+
+        [Output("Source Node", Visibility = PinVisibility.OnlyInspector)]
+        public ISpread<string> FSrcNode;
+
+        [Output("Definition Node Path")]
+        public ISpread<string> FDefNodePath;
+
+        [Output("Definition Node", Visibility = PinVisibility.OnlyInspector)]
+        public ISpread<string> FDefNode;
+
+        [Import]
+        IHDEHost FHDE;
+        #endregion fields & pins
+
+        public void Evaluate(int spreadMax) 
 		{
-			StructManager.DefinitionsChanged += DefinitionsChanged;
+			
+			FName.SliceCount = FInput.SliceCount;
+            FSrcNode.SliceCount = FInput.SliceCount;
+            FDefNode.SliceCount = FInput.SliceCount;
+			for (int i=0; i<FInput.SliceCount; i++)
+			{
+                if (FInput[i] != null)
+                {
+                    FName[i] = FInput[i].Key;
+                    var srcPath = FInput[i].SourcePath;
+                    if (FSrcNode[i] != srcPath)
+                        FSrcNodePath[i] = CreateReadablePath(srcPath);
+                    FSrcNode[i] = srcPath;
+                    var split = srcPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    var defPath = "/" + split[0] + StructManager.Definitions[FName[i]].HandlerPath;
+                    if (FDefNode[i] != defPath)
+                        FDefNodePath[i] = CreateReadablePath(defPath);
+                    FDefNode[i] = defPath;
+                }
+                else
+                {
+                    FName[i] = string.Empty;
+                    FSrcNode[i] = string.Empty;
+                    FSrcNodePath[i] = string.Empty;
+                    FDefNode[i] = string.Empty;
+                    FDefNodePath[i] = string.Empty;
+                }
+			}
+			
 		}
 
-		private void DefinitionsChanged(object sender, Definition definition)
-		{
-			var key = sender as string;
-		}
-		
-		public void Evaluate(int spreadMax) 
-		{
-			if ((FInput.SliceCount == 1) && (FInput[0] == null))
-			{
-				FName.SliceCount = 0;
-			}
-			else
-			{
-				FName.SliceCount = FInput.SliceCount;
-				
-				for (int i=0; i<FInput.SliceCount; i++)
-				{
-                    try
-                    {
-                        FName[i] = FInput[i].Key;
-                    }
-                    catch
-                    {
-                        FName[i] = "";
-                    }
-				}
-				
-			}
-		}
-	}
-	
-//	[PluginInfo(Name = "PinTypes", 
-//				Category = "Struct", 
-//				Help = "", 
-//				Tags = "")]
-	public class PinTypesNode : IPluginEvaluate, IPartImportsSatisfiedNotification
-	{
-		#region fields & pins
-		#pragma warning disable 169, 649
-		[Input("Get Selected", IsBang = true)]
-		ISpread<bool> FGet;
-		
-		[Output("Pin Name")]
-		ISpread<string> FNames;
-		
-		[Output("Type Name")]
-		ISpread<string> FTypeName;
-		
-		[Output("Type")]
-		ISpread<Type> FType;
-		
-		[Import()]
-		IHDEHost FHDE;
-		
-		[Import()]
-		ILogger FLogger;
-		
-		[Import()]
-		INodeInfoFactory NodeInfoFactory;
-		
-		[Import()]
-		INodeBrowserHost NodeBrowserHost;
-		
-		INode2[] FSelection;
-		#pragma warning restore
-		#endregion fields & pins
-		
-		public void OnImportsSatisfied()
-		{
-			FSelection = null;
-			FHDE.NodeSelectionChanged += NodeSelectionChanged;
-		}
-		private void NodeSelectionChanged(object sender, NodeSelectionEventArgs e)
-		{
-			FSelection = e.Nodes;
-		}
-		
-		public void Evaluate(int spreadMax)
-		{
-			if (FGet[0])
-			{
-				FNames.SliceCount = 0;
-				FTypeName.SliceCount = 0;
-				FType.SliceCount = 0;
-				foreach (var pin in FSelection[0].Pins)
-				{
-					if (pin.Direction != PinDirection.Configuration)
-					{	
-						FNames.Add(pin.Name);
-						if (pin.CLRType == null)
-							FTypeName.Add(pin.Type);
-						else
-							FTypeName.Add(pin.CLRType.FullName);
-						FType.Add(pin.CLRType);
-					}
-				}
-			}
-		}
+        string CreateReadablePath(string path)
+        {
+            var n = FHDE.GetNodeFromPath(path);
+            string result = string.Format("{0} [{1}]",n.NodeInfo.Name,n.ID);
+            while (n.Parent.Name!="root")
+            {
+                n = n.Parent;
+                if (n.Parent.Name == "root")
+                    result = n.Name+"/"+result;
+                else
+                    result = string.Format("{0} [{1}]/{2}",n.Name,n.ID,result);
+            }
+            return result;
+        }
 	}
 	
 //	[PluginInfo(Name = "AddPinType", 
