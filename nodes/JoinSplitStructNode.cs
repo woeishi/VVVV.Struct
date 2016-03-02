@@ -241,6 +241,7 @@ namespace VVVV.Struct
 
         protected override void RefreshStruct(Struct str)
 		{
+            str.SourcePath = FHost.GetNodePath(false);
             FStruct = str;
             if (FEnabled.SliceCount > 0 && FEnabled[0])
                 FOutput[0] = str;

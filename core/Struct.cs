@@ -114,8 +114,10 @@ namespace VVVV.Struct
 
 		private Dictionary<Property,object> data;
 		public Dictionary<Property,object> Data { get { return data; } }
-		
-		public Struct(string name)
+
+        public string SourcePath;
+
+        public Struct(string name)
 		{
 			key = name;
 			data = new Dictionary<Property,object>();
