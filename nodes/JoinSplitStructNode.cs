@@ -7,6 +7,7 @@ using VVVV.PluginInterfaces.V2;
 using VVVV.PluginInterfaces.V2.NonGeneric;
 using VVVV.Utils.Streams;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using VVVV.Core.Logging;
 #endregion usings
@@ -162,7 +163,6 @@ namespace VVVV.Struct
                     {
                         var outAttr = new OutputAttribute(property.Name);
                         outAttr.Order = order;
-                        outAttr.AutoFlush = false;
                         pinType = typeof(IOutStream<>).MakeGenericType(property.Datatype);
                         pin = FIOFactory.CreateIOContainer(pinType, outAttr);
 
@@ -309,7 +309,6 @@ namespace VVVV.Struct
                     var binOutPin = FPins[CreateBinSizeProperty(entry.Key)].RawIOObject as ISpread;
                     binOutPin.SliceCount = 1;
                     binOutPin[0] = inPin.SliceCount;
-                    binOutPin.Flush();
 
                     if (FPins[entry.Key].GetPluginIO().IsConnected)
                     {
@@ -317,7 +316,6 @@ namespace VVVV.Struct
                         outPin.Length = inPin.SliceCount;
 
                         FWriteStream[entry.Key.Datatype].Invoke(this, new object[] { inPin, outPin,0 });
-                        outPin.Flush();
                     }
                 }
 			}
@@ -343,7 +341,6 @@ namespace VVVV.Struct
                             bw.Write(inPin.SliceCount);
                         }
                     }
-                    binOutPin.Flush();
                     
                     if (FPins[entry.Key].GetPluginIO().IsConnected)
                     {
@@ -358,7 +355,6 @@ namespace VVVV.Struct
                             FWriteStream[entry.Key.Datatype].Invoke(this, new object[] { inPin, outPin, offset });
                             offset += inPin.SliceCount;
                         }
-                        outPin.Flush();
                     }
                 }
             }
@@ -384,13 +380,11 @@ namespace VVVV.Struct
                     var binPin = (pin.Value.RawIOObject as ISpread);
                     binPin.SliceCount = 1;
                     binPin[0] = 0;
-                    binPin.Flush();
                 }
                 else
                 {
                     var dataPin = (pin.Value.RawIOObject as IOutStream);
                     dataPin.Length = 0;
-                    dataPin.Flush();
                 }
             }
         }
@@ -409,9 +403,6 @@ namespace VVVV.Struct
 
                     if (hits.Count > 0)
                     {
-                        //foreach (var pin in FPins)
-                        //    (pin.Value.RawIOObject as ISpread).SliceCount = 0;
-
                         if (FMatch[0].Index == 0)
                             WriteOutputs(hits[0]);
                         else if (FMatch[0].Index == 1)
