@@ -270,8 +270,11 @@ namespace VVVV.Struct
 
         [Input("Match", EnumName="OccurenceMode", IsSingle = true)]
 		public ISpread<EnumEntry> FMatch;
-		
-		[Output("Status", Order = int.MaxValue, Visibility = PinVisibility.OnlyInspector)]
+
+        [Input("Evaluate", Order = int.MaxValue, IsSingle = true, DefaultBoolean = true, Visibility = PinVisibility.OnlyInspector)]
+        public IDiffSpread<bool> FEvaluate;
+
+        [Output("Status", Order = int.MaxValue, Visibility = PinVisibility.OnlyInspector)]
 		public ISpread<string> FStatus;
 
         bool FHasData = false;
@@ -391,41 +394,44 @@ namespace VVVV.Struct
 
 		public override void Evaluate(int spreadMax)
 		{
-            bool hasData = false;
-			if (FInput.SliceCount>0)
-			{
-				if ((FInput[0] != null) && (!string.IsNullOrEmpty(FStructDefName)))
-				{
-					List<Struct> hits = new List<Struct>();
-					for (int i=0; i<FInput.SliceCount; i++)
-						if (FInput[i]!=null && FInput[i].Key == FStructDefName)
-							hits.Add(FInput[i]);
-
-                    if (hits.Count > 0)
+            if (FEvaluate[0])
+            {
+                bool hasData = false;
+                if (FInput.SliceCount > 0)
+                {
+                    if ((FInput[0] != null) && (!string.IsNullOrEmpty(FStructDefName)))
                     {
-                        if (FMatch[0].Index == 0)
-                            WriteOutputs(hits[0]);
-                        else if (FMatch[0].Index == 1)
-                            WriteOutputs(hits[hits.Count - 1]);
-                        else
-                            WriteOutputs(hits);
+                        List<Struct> hits = new List<Struct>();
+                        for (int i = 0; i < FInput.SliceCount; i++)
+                            if (FInput[i] != null && FInput[i].Key == FStructDefName)
+                                hits.Add(FInput[i]);
 
-                        FStatus[0] = "OK";
-                        hasData = true;
+                        if (hits.Count > 0)
+                        {
+                            if (FMatch[0].Index == 0)
+                                WriteOutputs(hits[0]);
+                            else if (FMatch[0].Index == 1)
+                                WriteOutputs(hits[hits.Count - 1]);
+                            else
+                                WriteOutputs(hits);
+
+                            FStatus[0] = "OK";
+                            hasData = true;
+                        }
+                        else
+                            FStatus[0] = "No matching Definition";
                     }
                     else
-                        FStatus[0] = "No matching Definition";
-				}
-				else
-					FStatus[0] = "Input null";
-			}
+                        FStatus[0] = "Input null";
+                }
 
-            if (hasData != FHasData || FHold.IsChanged)
-            {
-                FHasData = hasData;
-                if ((!FHasData) && (!FHold[0]))
+                if (hasData != FHasData || FHold.IsChanged)
                 {
-                    ClearPins();
+                    FHasData = hasData;
+                    if ((!FHasData) && (!FHold[0]))
+                    {
+                        ClearPins();
+                    }
                 }
             }
 		}
