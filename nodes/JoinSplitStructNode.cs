@@ -275,18 +275,25 @@ namespace VVVV.Struct
 		public ISpread<string> FStatus;
 
         bool FHasData = false;
-        MethodInfo FMethod;
-		#endregion fields & pins
-		public StructSplitNode() : base(false) {}
+        MethodInfo FMethod = typeof(StructSplitNode).GetMethod("WriteStream");
+        Dictionary<Type, MethodInfo> FWriteStream;
+        #endregion fields & pins
+        public StructSplitNode() : base(false) {}
 
         public override void OnImportsSatisfied()
         {
+            FWriteStream = new Dictionary<Type, MethodInfo>();
             ClearPins();
             base.OnImportsSatisfied();
-            FMethod = typeof(StructSplitNode).GetMethod("WriteStream");
         }
 
-        protected override void RefreshStruct(Struct str) {}
+        protected override void RefreshStruct(Struct str)
+        {
+            FWriteStream.Clear();
+            foreach (var entry in str.Data)
+                if (!FWriteStream.ContainsKey(entry.Key.Datatype))
+                    FWriteStream.Add(entry.Key.Datatype, FMethod.MakeGenericMethod(entry.Key.Datatype));
+        }
 		
 		private void WriteOutputs(Struct str)
 		{
@@ -309,8 +316,7 @@ namespace VVVV.Struct
                         var outPin = FPins[entry.Key].RawIOObject as IOutStream;
                         outPin.Length = inPin.SliceCount;
 
-                        var m = FMethod.MakeGenericMethod(entry.Key.Datatype);
-                        m.Invoke(this, new object[] { inPin, outPin,0 });
+                        FWriteStream[entry.Key.Datatype].Invoke(this, new object[] { inPin, outPin,0 });
                         outPin.Flush();
                     }
                 }
@@ -343,14 +349,13 @@ namespace VVVV.Struct
                     {
                         var outPin = FPins[entry.Key].RawIOObject as IOutStream;
                         outPin.Length = outCountSum;
-                        var m = FMethod.MakeGenericMethod(entry.Key.Datatype);
                         int offset = 0;
 
                         foreach (var s in str)
                         {
                             var inPin = s.Data[entry.Key] as ISpread;
                             
-                            m.Invoke(this, new object[] { inPin, outPin, offset });
+                            FWriteStream[entry.Key.Datatype].Invoke(this, new object[] { inPin, outPin, offset });
                             offset += inPin.SliceCount;
                         }
                         outPin.Flush();
