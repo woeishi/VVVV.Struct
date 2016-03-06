@@ -325,16 +325,17 @@ namespace VVVV.Struct
                     FPins[CreateBinSizeProperty(entry.Key)].GetPluginIO().IsConnected)
                 {
                     int outCountSum = 0;
-                    var binOutPin = FPins[CreateBinSizeProperty(entry.Key)].RawIOObject as ISpread;
+                    var binOutPin = FPins[CreateBinSizeProperty(entry.Key)].RawIOObject as ISpread<int>;
                     binOutPin.SliceCount = str.Count;
-                    int incr = 0;
-                    foreach (var s in str)
+                    using (var bw = binOutPin.Stream.GetWriter())
                     {
-                        var inPin = s.Data[entry.Key] as ISpread;
-                        inPin.Sync();
-                        outCountSum += inPin.SliceCount;
-                        binOutPin[incr] = inPin.SliceCount;
-                        incr++;
+                        foreach (var s in str)
+                        {
+                            var inPin = s.Data[entry.Key] as ISpread;
+                            inPin.Sync();
+                            outCountSum += inPin.SliceCount;
+                            bw.Write(inPin.SliceCount);
+                        }
                     }
                     binOutPin.Flush();
                     
@@ -358,12 +359,10 @@ namespace VVVV.Struct
             }
         }
 
-        public void WriteStream<T>(ISpread input, IOutStream output, int offset)
+        public void WriteStream<T>(ISpread<T> input, IOutStream<T> output, int offset)
         {
-            ISpread<T> i = input as ISpread<T>;
-            IOutStream<T> o = output as IOutStream<T>;
-            using (var r = i.Stream.GetReader())
-            using (var w = o.GetWriter())
+            using (var r = input.Stream.GetReader())
+            using (var w = output.GetWriter())
             {
                 w.Position = offset;
                 while (!r.Eos)
