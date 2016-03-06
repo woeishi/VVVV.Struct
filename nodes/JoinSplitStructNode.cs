@@ -5,6 +5,8 @@ using System.ComponentModel.Composition;
 
 using VVVV.PluginInterfaces.V2;
 using VVVV.PluginInterfaces.V2.NonGeneric;
+using VVVV.Utils.Streams;
+using System.Reflection;
 
 using VVVV.Core.Logging;
 #endregion usings
@@ -160,6 +162,8 @@ namespace VVVV.Struct
                     {
                         var outAttr = new OutputAttribute(property.Name);
                         outAttr.Order = order;
+                        outAttr.AutoFlush = false;
+                        pinType = typeof(IOutStream<>).MakeGenericType(property.Datatype);
                         pin = FIOFactory.CreateIOContainer(pinType, outAttr);
 
                         //create bin size pin herer
@@ -249,9 +253,6 @@ namespace VVVV.Struct
 
         public override void Evaluate(int spreadMax)
         {
-            if (FEnabled.SliceCount > 0 && FEnabled[0])
-                foreach (var pin in FPins)
-                    (pin.Value.RawIOObject as ISpread).Sync();
         }
     }
 	
@@ -273,7 +274,8 @@ namespace VVVV.Struct
 		[Output("Status", Order = int.MaxValue, Visibility = PinVisibility.OnlyInspector)]
 		public ISpread<string> FStatus;
 
-        bool FHasData = true;
+        bool FHasData = false;
+        MethodInfo FMethod;
 		#endregion fields & pins
 		public StructSplitNode() : base(false) {}
 
@@ -281,27 +283,93 @@ namespace VVVV.Struct
         {
             ClearPins();
             base.OnImportsSatisfied();
+            FMethod = typeof(StructSplitNode).GetMethod("WriteStream");
         }
 
         protected override void RefreshStruct(Struct str) {}
 		
-		private void WriteOutputs(Dictionary<Property,object> data)
+		private void WriteOutputs(Struct str)
 		{
-			foreach(var entry in data)
+			foreach(var entry in str.Data)
 			{
-                var inPin = entry.Value as ISpread;
-                var outPin = FPins[entry.Key].RawIOObject as ISpread;
-                int offset = outPin.SliceCount;
-                outPin.SliceCount += inPin.SliceCount;
-                for (int i = 0; i < inPin.SliceCount; i++)
-                    outPin[i + offset] = inPin[i];
+                if (FPins[entry.Key].GetPluginIO().IsConnected ||
+                    FPins[CreateBinSizeProperty(entry.Key)].GetPluginIO().IsConnected)
+                {
+                    var inPin = entry.Value as ISpread;
+                    inPin.Sync();
 
-                //set Bin Size
-                var binOutPin = FPins[CreateBinSizeProperty(entry.Key)].RawIOObject as ISpread;
-                binOutPin.SliceCount += 1;
-				binOutPin[binOutPin.SliceCount-1] = inPin.SliceCount;
+                    //set Bin Size
+                    var binOutPin = FPins[CreateBinSizeProperty(entry.Key)].RawIOObject as ISpread;
+                    binOutPin.SliceCount = 1;
+                    binOutPin[0] = inPin.SliceCount;
+                    binOutPin.Flush();
+
+                    if (FPins[entry.Key].GetPluginIO().IsConnected)
+                    {
+                        var outPin = FPins[entry.Key].RawIOObject as IOutStream;
+                        outPin.Length = inPin.SliceCount;
+
+                        var m = FMethod.MakeGenericMethod(entry.Key.Datatype);
+                        m.Invoke(this, new object[] { inPin, outPin,0 });
+                        outPin.Flush();
+                    }
+                }
 			}
 		}
+
+        void WriteOutputs(List<Struct> str)
+        {
+            foreach (var entry in str[0].Data)
+            {
+                if (FPins[entry.Key].GetPluginIO().IsConnected ||
+                    FPins[CreateBinSizeProperty(entry.Key)].GetPluginIO().IsConnected)
+                {
+                    int outCountSum = 0;
+                    var binOutPin = FPins[CreateBinSizeProperty(entry.Key)].RawIOObject as ISpread;
+                    binOutPin.SliceCount = str.Count;
+                    int incr = 0;
+                    foreach (var s in str)
+                    {
+                        var inPin = s.Data[entry.Key] as ISpread;
+                        inPin.Sync();
+                        outCountSum += inPin.SliceCount;
+                        binOutPin[incr] = inPin.SliceCount;
+                        incr++;
+                    }
+                    binOutPin.Flush();
+                    
+                    if (FPins[entry.Key].GetPluginIO().IsConnected)
+                    {
+                        var outPin = FPins[entry.Key].RawIOObject as IOutStream;
+                        outPin.Length = outCountSum;
+                        var m = FMethod.MakeGenericMethod(entry.Key.Datatype);
+                        int offset = 0;
+
+                        foreach (var s in str)
+                        {
+                            var inPin = s.Data[entry.Key] as ISpread;
+                            
+                            m.Invoke(this, new object[] { inPin, outPin, offset });
+                            offset += inPin.SliceCount;
+                        }
+                        outPin.Flush();
+                    }
+                }
+            }
+        }
+
+        public void WriteStream<T>(ISpread input, IOutStream output, int offset)
+        {
+            ISpread<T> i = input as ISpread<T>;
+            IOutStream<T> o = output as IOutStream<T>;
+            using (var r = i.Stream.GetReader())
+            using (var w = o.GetWriter())
+            {
+                w.Position = offset;
+                while (!r.Eos)
+                    w.Write(r.Read());
+            }
+        }
 
         void ClearPins()
         {
@@ -309,12 +377,17 @@ namespace VVVV.Struct
             {
                 if (pin.Key.Name.Contains(" Bin Size"))
                 {
-                    var spread = (pin.Value.RawIOObject as ISpread);
-                    spread.SliceCount = 1;
-                    spread[0] = 0;
+                    var binPin = (pin.Value.RawIOObject as ISpread);
+                    binPin.SliceCount = 1;
+                    binPin[0] = 0;
+                    binPin.Flush();
                 }
                 else
-                    (pin.Value.RawIOObject as ISpread).SliceCount = 0;
+                {
+                    var dataPin = (pin.Value.RawIOObject as IOutStream);
+                    dataPin.Length = 0;
+                    dataPin.Flush();
+                }
             }
         }
 
@@ -325,23 +398,22 @@ namespace VVVV.Struct
 			{
 				if ((FInput[0] != null) && (!string.IsNullOrEmpty(FStructDefName)))
 				{
-					List<int> hits = new List<int>();
+					List<Struct> hits = new List<Struct>();
 					for (int i=0; i<FInput.SliceCount; i++)
 						if (FInput[i]!=null && FInput[i].Key == FStructDefName)
-							hits.Add(i);
+							hits.Add(FInput[i]);
 
                     if (hits.Count > 0)
                     {
-                        foreach (var pin in FPins)
-                            (pin.Value.RawIOObject as ISpread).SliceCount = 0;
+                        //foreach (var pin in FPins)
+                        //    (pin.Value.RawIOObject as ISpread).SliceCount = 0;
 
                         if (FMatch[0].Index == 0)
-                            WriteOutputs(FInput[hits[0]].Data);
+                            WriteOutputs(hits[0]);
                         else if (FMatch[0].Index == 1)
-                            WriteOutputs(FInput[hits[hits.Count - 1]].Data);
+                            WriteOutputs(hits[hits.Count - 1]);
                         else
-                            foreach (int id in hits)
-                                WriteOutputs(FInput[id].Data);
+                            WriteOutputs(hits);
 
                         FStatus[0] = "OK";
                         hasData = true;
