@@ -59,6 +59,7 @@ namespace VVVV.Struct
 
         internal Definition FDefinition;
         internal string FNodePath;
+        bool FDefinitionChanged;
 
         internal event EventHandler Disposing;
         #endregion fields & pins
@@ -129,21 +130,20 @@ namespace VVVV.Struct
 		// Called when data for any output pin is requested.
 		public void Evaluate(int SpreadMax)
         {
-            bool definitionChanged = false;
             if (FPinTypeIn.IsChanged)
             {
                 FDatatype.AssignFrom(FPinTypeIn);
-                definitionChanged = true;
+                FDefinitionChanged = true;
             }
             if (FPinNameIn.IsChanged)
             {
                 FName.AssignFrom(FPinNameIn);
-                definitionChanged = true;
+                FDefinitionChanged = true;
             }
             if (FPinDefaultIn.IsChanged)
             {
                 FDefault.AssignFrom(FPinDefaultIn);
-                definitionChanged = true;
+                FDefinitionChanged = true;
             }
             if (FStructNameIn.IsChanged && FStructNameIn.SliceCount != 0)
             {
@@ -151,10 +151,10 @@ namespace VVVV.Struct
                     FStructNameIn[0] != FConfigStructName[0])
                 {
                     FConfigStructName[0] = FStructNameIn[0];
-                    definitionChanged = true;
+                    FDefinitionChanged = true;
                 }
             }
-            if (definitionChanged)
+            if (FDefinitionChanged)
                 SetDefinition();
         }
 
@@ -166,7 +166,10 @@ namespace VVVV.Struct
             if (!string.IsNullOrEmpty(FConfigStructName[0]) &&
                 FStructNameIn.SliceCount != 0 &&
                 FConfigStructName[0] == FStructNameIn[0])
+            {
                 StructManager.CreateDefinition(this);
+                FDefinitionChanged = false;
+            }
         }
     }
 }
