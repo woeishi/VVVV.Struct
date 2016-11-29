@@ -5,6 +5,7 @@ using VVVV.Utils.VMath;
 using VVVV.Utils.VColor;
 using SlimDX;
 using System.IO;
+using System.Xml.Linq;
 
 namespace VVVV.Struct
 {
@@ -19,8 +20,8 @@ namespace VVVV.Struct
 			{
 				try
 				{
-					return System.Type.GetType(typeName, true, true);
-				}
+                    return Type.GetType(key, true, true);
+                }
 				catch
 				{
 					return typeof(double);
@@ -60,6 +61,10 @@ namespace VVVV.Struct
             Mappings.Add("stream", typeof(Stream));
             Mappings.Add("raw", typeof(Stream));
 			Mappings.Add("struct", typeof(Struct));
-		}
-	}
+
+            Mappings.Add("xobject", typeof(XObject));
+            Mappings.Add("xelement", typeof(XElement));
+            Mappings.Add("xattribute", typeof(XAttribute));
+        }
+    }
 }
