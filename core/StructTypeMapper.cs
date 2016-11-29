@@ -5,10 +5,11 @@ using VVVV.Utils.VMath;
 using VVVV.Utils.VColor;
 using SlimDX;
 using System.IO;
+using System.Xml.Linq;
 
 namespace VVVV.Struct
 {
-	public static class StructTypeMapper
+    public static class StructTypeMapper
 	{
 		public static Type Map(string typeName)
 		{
@@ -60,6 +61,7 @@ namespace VVVV.Struct
 			Mappings.Add("raw", typeof(Stream));
 			Mappings.Add("stream", typeof(Stream));
 			Mappings.Add("struct", typeof(Struct));
-		}
+            Mappings.Add("xelement", typeof(XElement));
+        }
 	}
 }
