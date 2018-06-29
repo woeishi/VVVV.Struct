@@ -1,17 +1,52 @@
 using System;
 using VVVV.PluginInterfaces.V2;
-using VVVV.PluginInterfaces.V2.Graph;
-using VVVV.Hosting;
-using VVVV.Hosting.IO;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
-using VVVV.Core.Logging;
 
-namespace VVVV.Struct
+namespace VVVV.Struct.Nodes
 {
-	#region PluginInfo
-	[PluginInfo(Name = "Info", 
+    [PluginInfo(Name = "Filter", Category = "Struct", Author = "woei")]
+    public class FilterNode : IPluginEvaluate
+    {
+        #region fields & pins
+        [Input("Input")]
+        public ISpread<Core.Struct> FInput;
+
+        [Input("Struct Name")]
+        public ISpread<string> FName;
+
+        [Output("Output")]
+        public ISpread<Core.Struct> FOutput;
+
+        [Output("Former Index")]
+        public ISpread<int> FFormerIndex;
+
+        [Output("Filter Index")]
+        public ISpread<int> FFilterIndex;
+        #endregion
+
+        public void Evaluate(int spreadMax)
+        {
+            FOutput.SliceCount = 0;
+            FFormerIndex.SliceCount = 0;
+            FFilterIndex.SliceCount = 0;
+            for (int i = 0; i < FInput.SliceCount; i++)
+            {
+                for (int f = 0; f < FName.SliceCount; f++)
+                {
+                    if (FInput[i] != null && FInput[i].Name == FName[f])
+                    {
+                        FOutput.Add(FInput[i]);
+                        FFormerIndex.Add(i);
+                        FFilterIndex.Add(f);
+                    }
+                }
+            }
+        }
+    }
+
+    #region PluginInfo
+    [PluginInfo(Name = "Info", 
 				Category = "Struct", 
 				Help = "outputs basic information on the incoming structs", 
 				Author = "woei")]
@@ -20,22 +55,16 @@ namespace VVVV.Struct
 	{
 		#region fields & pins
 		[Input("Input")]
-		public ISpread<Struct> FInput;
+		public ISpread<Core.Struct> FInput;
 
 		[Output("Struct Name")]
 		public ISpread<string> FName;
 
-        [Output("Source Node Path")]
-        public ISpread<string> FSrcNodePath;
+        //[Output("Source Node Path")]
+        //public ISpread<string> FSrcNodePath;
 
-        [Output("Source Node", Visibility = PinVisibility.OnlyInspector)]
-        public ISpread<string> FSrcNode;
-
-        [Output("Definition Node Path")]
-        public ISpread<string> FDefNodePath;
-
-        [Output("Definition Node", Visibility = PinVisibility.OnlyInspector)]
-        public ISpread<string> FDefNode;
+        //[Output("Source Node", Visibility = PinVisibility.OnlyInspector)]
+        //public ISpread<string> FSrcNode;
 
         [Import]
         IHDEHost FHDE;
@@ -43,97 +72,74 @@ namespace VVVV.Struct
 
         public void Evaluate(int spreadMax) 
 		{
-			
 			FName.SliceCount = FInput.SliceCount;
-            FSrcNode.SliceCount = FInput.SliceCount;
-            FDefNode.SliceCount = FInput.SliceCount;
+            //FSrcNode.SliceCount = FInput.SliceCount;
 			for (int i=0; i<FInput.SliceCount; i++)
 			{
                 if (FInput[i] != null)
                 {
-                    FName[i] = FInput[i].Key;
-                    var srcPath = FInput[i].SourcePath;
-                    if (FSrcNode[i] != srcPath)
-                        FSrcNodePath[i] = CreateReadablePath(srcPath);
-                    FSrcNode[i] = srcPath;
-                    var split = srcPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    var defPath = "/" + split[0] + StructManager.Definitions[FName[i]].HandlerPath;
-                    if (FDefNode[i] != defPath)
-                        FDefNodePath[i] = CreateReadablePath(defPath);
-                    FDefNode[i] = defPath;
+                    FName[i] = FInput[i].Name;
+                    //var srcPath = FInput[i].SourcePath;
+                    //if (FSrcNode[i] != srcPath)
+                    //    FSrcNodePath[i] = CreateReadablePath(srcPath);
+                    //FSrcNode[i] = srcPath;
+                    //var split = srcPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
                 }
                 else
                 {
                     FName[i] = string.Empty;
-                    FSrcNode[i] = string.Empty;
-                    FSrcNodePath[i] = string.Empty;
-                    FDefNode[i] = string.Empty;
-                    FDefNodePath[i] = string.Empty;
+                    //FSrcNode[i] = string.Empty;
+                    //FSrcNodePath[i] = string.Empty;
                 }
 			}
 			
 		}
 
-        string CreateReadablePath(string path)
+        //string CreateReadablePath(string path)
+        //{
+        //    var n = FHDE.GetNodeFromPath(path);
+        //    string result = string.Format("{0} [{1}]",n.NodeInfo.Name,n.ID);
+        //    while (n.Parent.Name!="root")
+        //    {
+        //        n = n.Parent;
+        //        if (n.Parent.Name == "root")
+        //            result = n.Name+"/"+result;
+        //        else
+        //            result = string.Format("{0} [{1}]/{2}",n.Name,n.ID,result);
+        //    }
+        //    return result;
+        //}
+	}
+
+    #region PluginInfo
+    [PluginInfo(Name = "AsString", Category = "Struct", Help = "", Author = "woei")]
+    #endregion PluginInfo
+    public class AsTextStructNode : IPluginEvaluate
+    {
+        #region fields & pins
+        [Input("Input")]
+        public ISpread<Core.Struct> FInput;
+
+        [Output("Output")]
+        public ISpread<ISpread<string>> FText;
+        #endregion fields & pins
+
+        public void Evaluate(int spreadMax)
         {
-            var n = FHDE.GetNodeFromPath(path);
-            string result = string.Format("{0} [{1}]",n.NodeInfo.Name,n.ID);
-            while (n.Parent.Name!="root")
+            FText.SliceCount = FInput.SliceCount;
+            for (int o = 0; o < FInput.SliceCount; o++)
             {
-                n = n.Parent;
-                if (n.Parent.Name == "root")
-                    result = n.Name+"/"+result;
-                else
-                    result = string.Format("{0} [{1}]/{2}",n.Name,n.ID,result);
+                if (FInput[o] == null)
+                    break;
+
+                FText[o].SliceCount = FInput[o].Fields.Count;
+                int i = 0;
+                foreach (var f in FInput[o].Fields)
+                {
+                    FText[o][i] = f.Name + ": " + f.ContainerRegistry.ToString(FInput[o][f]);
+                    i++;
+                }
             }
-            return result;
         }
-	}
-	
-//	[PluginInfo(Name = "AddPinType", 
-//				Category = "Struct", 
-//				Help = "", 
-//				Tags = "",
-//				AutoEvaluate = true)]
-	public class AddPinTypeNode : IPluginEvaluate
-	{
-		#region fields & pins
-		#pragma warning disable 169, 649
-		[Input("Type Name")]
-		ISpread<string> FTypeName;
-		
-		[Input("Type")]
-		ISpread<Type> FType;
-		
-		[Input("Use")]
-		ISpread<bool> FUse;
-		
-		[Import()]
-		ILogger FLogger;
-		#pragma warning restore
-		#endregion fields & pins
-		
-		public void Evaluate(int spreadMax)
-		{
-			for (int i=0; i<spreadMax; i++)
-			{
-				if (FUse[i])
-				{
-					try
-					{
-						if (!StructTypeMapper.Mappings.ContainsKey(FTypeName[i]))
-						{
-							StructTypeMapper.Mappings.Add(FTypeName[i],FType[i]);
-						}
-					}
-					catch (Exception e)
-					{
-						FLogger.Log(e);
-					}
-					
-				}
-			}
-		}
-	}
+    }
 }

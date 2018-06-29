@@ -1,126 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using System.Runtime.Serialization;
-using System.Xml.Serialization;
-
-namespace VVVV.Struct
+namespace VVVV.Struct.Core
 {
-    [DataContract]
-    public class Property : IEquatable<Property>
+    public class Sync
     {
-        [DataMember, XmlAttribute]
-        public string Name;
-
-        string typestring;
-        [DataMember, XmlAttribute]
-        public string DatatypeString
-        {
-            get { return typestring; }
-            set { typestring = value; Datatype = StructTypeMapper.Map(value); }
-        }
-
-        [XmlIgnore]
-        public Type Datatype;
-
-        [DataMember, XmlAttribute]
-        public string Default;
-
-        public Property()
-        {
-            Name = string.Empty;
-            typestring = "double";
-            Datatype = typeof(double);
-            Default = string.Empty;
-        }
-
-        public Property(string name, Type type, string defaultValue)
-        {
-            Name = name;
-            Datatype = type;
-            foreach (var kv in StructTypeMapper.Mappings)
-            {
-                if (type == kv.Value)
-                {
-                    typestring = kv.Key;
-                    break;
-                }
-            }
-            Default = defaultValue;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is Property)
-                return Equals((Property)obj);
-            else
-                return false;
-        }
-
-        public bool Equals(Property other)
-        {
-            return
-                this.Name == other.Name &&
-                this.Datatype == other.Datatype &&
-                this.Default == other.Default;
-        }
-
-        public override int GetHashCode()
-        {
-            return this.Name.GetHashCode() ^ this.Datatype.GetHashCode() ^ this.Default.GetHashCode();
-        }
+        public event EventHandler Requested;
+        public void Request() => Requested?.Invoke(this, EventArgs.Empty);
     }
 
-    [DataContract]
-    public class Definition : EventArgs
-	{
-        [DataMember, XmlAttribute]
-        public string Key;
-        [DataMember, XmlElement]
-        public List<Property> Property;
-        [DataMember, XmlAttribute]
-        public string HandlerPath;
+    public class Struct
+    {
+        readonly string FName;
+        public string Name => FName;
+        readonly Dictionary<Field, object> FData;
+        public IReadOnlyCollection<Field> Fields => FData.Keys;
 
-        private Definition()
+        public Dictionary<Field, Sync> Sync { get; }
+
+        public Struct(Declaration declaration)
         {
-            Property = new List<Property>();
-            Key = string.Empty;
-            HandlerPath = string.Empty;
+            FData = new Dictionary<Field, object>();
+            Sync = new Dictionary<Field, Sync>();
+            FName = declaration.Name;
+            foreach (var f in declaration.Fields)
+            {
+                FData.Add(f, null);
+                Sync.Add(f, new Sync());
+            }
         }
-		internal Definition(string key):this()
-		{
-            Key = key;
-		}
-		
-        internal bool TryAddProperty(Property property)
+
+        public Struct(Struct other)
         {
-            bool nameExists = false;
-            foreach (var p in Property)
-                if (p.Name == property.Name)
-                    nameExists = true;
-            if (!nameExists)
-                Property.Add(property);
-            return !nameExists;
+            FName = other.Name;
+            FData = new Dictionary<Field, object>(other.FData);
+            Sync = new Dictionary<Field, Sync>();
+            foreach (var f in FData.Keys)
+                Sync.Add(f, new Sync());
         }
-	}
-	
-	/// <summary>
-	/// class to hold the struct data
-	/// </summary>
-	public class Struct
-	{
-		private string key;
-		public string Key { get { return key; } }
 
-		private Dictionary<Property,object> data;
-		public Dictionary<Property,object> Data { get { return data; } }
+        public object this[Field field]
+        {
+            get
+            {
+                if (!FData.ContainsKey(field))
+                    return null;
 
-        public string SourcePath;
+                Sync[field].Request();
+                return FData[field];
+            }
+            set
+            {
+                if (FData.ContainsKey(field))
+                    FData[field] = value;
+            }
+        }
 
-        public Struct(string name)
-		{
-			key = name;
-			data = new Dictionary<Property,object>();
-		}
-	}
+        public object GetClonedData(Field field)
+        {
+            //Sync[field].Request();
+            return field.ContainerRegistry.CloneData(this[field]);
+        }
+    }
 }

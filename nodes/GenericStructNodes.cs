@@ -3,16 +3,16 @@ using VVVV.Nodes.Generic;
 using VVVV.PluginInterfaces.V2;
 using VVVV.Utils.Streams;
 
-namespace VVVV.Struct
+namespace VVVV.Struct.Nodes
 {
 	#region SingleValue
 	
-	[PluginInfo(Name = "Cast",
-                Category = "Struct",
-                Help = "Casts any type to a type of this category, so be sure the input is of the required type",
-                Tags = "convert, as, generic"
-                )]
-    public class StructCastNode : Cast<Struct> {}
+	//[PluginInfo(Name = "Cast",
+ //               Category = "Struct",
+ //               Help = "Casts any type to a type of this category, so be sure the input is of the required type",
+ //               Tags = "convert, as, generic"
+ //               )]
+ //   public class StructCastNode : Cast<Core.Struct> {}
     
     #endregion SingleValue
     
@@ -23,7 +23,7 @@ namespace VVVV.Struct
                 Help = "Concatenates all input spreads to one output spread.",
                 Tags = "generic, spreadop"
                 )]
-    public class StructConsNode : Cons<Struct> {}
+    public class StructConsNode : Cons<Core.Struct> {}
 	
 	[PluginInfo(Name = "CAR", 
 	            Category = "Struct",
@@ -32,7 +32,7 @@ namespace VVVV.Struct
 	            Tags = "split, generic, spreadop",
 	            Author = "woei"
 	           )]
-	public class StructCARBinNode : CARBin<Struct> {}
+	public class StructCARBinNode : CARBin<Core.Struct> {}
 	
 	[PluginInfo(Name = "CDR", 
 	            Category = "Struct", 
@@ -41,7 +41,7 @@ namespace VVVV.Struct
 	            Tags = "split, generic, spreadop",
 	            Author = "woei"
 	           )]
-	public class StructCDRBinNode : CDRBin<Struct> {}
+	public class StructCDRBinNode : CDRBin<Core.Struct> {}
 	
 	[PluginInfo(Name = "Reverse", 
 	            Category = "Struct", 
@@ -50,7 +50,7 @@ namespace VVVV.Struct
 	            Tags = "invert, generic, spreadop",
 	            Author = "woei"
 	           )]
-	public class StructReverseBinNode : ReverseBin<Struct> {}
+	public class StructReverseBinNode : ReverseBin<Core.Struct> {}
 
 	[PluginInfo(Name = "Shift", 
 	            Category = "Struct", 
@@ -59,16 +59,15 @@ namespace VVVV.Struct
 	            Tags = "generic, spreadop",
 	            Author = "woei"
 	           )]
-	public class StructShiftBinNode : ShiftBin<Struct> {}
+	public class StructShiftBinNode : ShiftBin<Core.Struct> {}
 	
 	[PluginInfo(Name = "SetSlice",
 	            Category = "Struct",
-	            Version = "Bin",
 	            Help = "Replaces individual slices of a spread with the given input",
 	            Tags = "generic, spreadop",
 	            Author = "woei"
 	           )]
-	public class StructSetSliceNode : SetSlice<Struct> {}
+	public class StructSetSliceNode : SetSlice<Core.Struct> {}
     
 	[PluginInfo(Name = "DeleteSlice",
 	            Category = "Struct",
@@ -76,14 +75,14 @@ namespace VVVV.Struct
 	            Tags = "remove, generic, spreadop",
 	            Author = "woei"
 	           )]
-	public class StructDeleteSliceNode : DeleteSlice<Struct> {}
+	public class StructDeleteSliceNode : DeleteSlice<Core.Struct> {}
 	
 	[PluginInfo(Name = "Select",
                 Category = "Struct",
                 Help = "Select which slices and how many form the output spread.",
 	            Tags = "resample, generic, spreadop"
 	           )]
-    public class StructSelectNode : Select<Struct> {}
+    public class StructSelectNode : Select<Core.Struct> {}
     
     [PluginInfo(Name = "Select", 
 				Category = "Struct",
@@ -92,14 +91,14 @@ namespace VVVV.Struct
 				Tags = "repeat, generic, spreadop",
 				Author = "woei"
 			)]
-    public class StructSelectBinNode : SelectBin<Struct> {}
+    public class StructSelectBinNode : SelectBin<Core.Struct> {}
     
 	[PluginInfo(Name = "Unzip", 
 	            Category = "Struct",
 	            Help = "Unzips a spread into multiple spreads.", 
 	            Tags = "split, generic, spreadop"
 	           )]
-	public class StructUnzipNode : Unzip<Struct> {}
+	public class StructUnzipNode : Unzip<Core.Struct> {}
 	
 	[PluginInfo(Name = "Unzip", 
 	            Category = "Struct",
@@ -107,14 +106,14 @@ namespace VVVV.Struct
 	            Help = "Unzips a spread into multiple spreads.", 
 	            Tags = "split, generic, spreadop"
 	           )]
-	public class StructUnzipBinNode : Unzip<IInStream<Struct>> {}
+	public class StructUnzipBinNode : Unzip<IInStream<Core.Struct>> {}
 	
 	[PluginInfo(Name = "Zip", 
 	            Category = "Struct",
 	            Help = "Zips spreads together.", 
 	            Tags = "join, generic, spreadop"
 	           )]
-	public class StructZipNode : Zip<Struct> {}
+	public class StructZipNode : Zip<Core.Struct> {}
 	
 	[PluginInfo(Name = "Zip", 
 	            Category = "Struct",
@@ -122,7 +121,7 @@ namespace VVVV.Struct
 	            Help = "Zips spreads together.", 
 	            Tags = "join, generic, spreadop"
 	           )]
-	public class StructZipBinNode : Zip<IInStream<Struct>> {}
+	public class StructZipBinNode : Zip<IInStream<Core.Struct>> {}
 	
     [PluginInfo(Name = "GetSpread",
                 Category = "Struct",
@@ -130,7 +129,7 @@ namespace VVVV.Struct
                 Help = "Returns sub-spreads from the input specified via offset and count",
                 Tags = "generic, spreadop",
                 Author = "woei")]
-    public class StructGetSpreadNode : GetSpreadAdvanced<Struct> {}
+    public class StructGetSpreadNode : GetSpreadAdvanced<Core.Struct> {}
     
 	[PluginInfo(Name = "SetSpread",
 	            Category = "Struct",
@@ -139,21 +138,21 @@ namespace VVVV.Struct
 	            Tags = "generic, spreadop",
 	            Author = "woei"
 	           )]
-	public class StructSetSpreadNode : SetSpread<Struct> {}
+	public class StructSetSpreadNode : SetSpread<Core.Struct> {}
     
     [PluginInfo(Name = "Pairwise",
                 Category = "Struct",
                 Help = "Returns all pairs of successive slices. From an input ABCD returns AB, BC, CD.",
                 Tags = "generic, spreadop"
                 )]
-    public class StructPairwiseNode : Pairwise<Struct> {}
+    public class StructPairwiseNode : Pairwise<Core.Struct> {}
 
     [PluginInfo(Name = "SplitAt",
                 Category = "Struct",
                 Help = "Splits a spread at the given index.",
                 Tags = "generic, spreadop"
                 )]
-    public class StructSplitAtNode : SplitAtNode<Struct> { }
+    public class StructSplitAtNode : SplitAtNode<Core.Struct> { }
     
    	#endregion SpreadOps
 }

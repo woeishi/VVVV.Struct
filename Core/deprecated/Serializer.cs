@@ -1,38 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace VVVV.Struct
+namespace VVVV.Struct.Core
 {
-    /// <summary>
-    /// simple definition serializer singleton
-    /// </summary>
-    public static class DefinitionSerializer
-    {
-        static Serializer<Definition> serializer = new Serializer<Definition>();
-
-        /// <summary>
-        /// Deserialize Definition from utf8 xml string
-        /// </summary>
-        /// <param name="xml">xml string representation of the definition</param>
-        /// <returns>Definition</returns>
-        public static Definition Read(string xml)
-        {
-            return (Definition)serializer.Read(xml);
-        }
-
-        /// <summary>
-        /// Serializes a Definition to utf8 xml string, without namespace prefix and xml declaration
-        /// </summary>
-        /// <param name="definition">definition to serialize</param>
-        /// <returns>utf8 xml string</returns>
-        public static string Write(Definition definition)
-        {
-            return serializer.Write(definition);
-        }
-    }
-
     /// <summary>
     /// Generic serializer stripping namespace prefixes and omitting xml declaration strings
     /// </summary>
@@ -51,7 +24,14 @@ namespace VVVV.Struct
             settings = new XmlWriterSettings();
             settings.OmitXmlDeclaration = true;
             encoding = UTF8Encoding.UTF8;
-            serializer = new XmlSerializer(typeof(T));
+            try
+            {
+                serializer = new XmlSerializer(typeof(T));
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
         }
 
         /// <summary>
@@ -64,7 +44,7 @@ namespace VVVV.Struct
             serializer.Serialize(stream, obj, ns);
         }
 
-        internal string Write(T obj)
+        public string Write(T obj)
         {
             string result;
             using (var ms = new MemoryStream())
@@ -88,7 +68,7 @@ namespace VVVV.Struct
             return (T)serializer.Deserialize(stream);
         }
 
-        internal T Read(string xml)
+        public T Read(string xml)
         {
             T result;
             using (var ms = new MemoryStream(encoding.GetBytes(xml)))

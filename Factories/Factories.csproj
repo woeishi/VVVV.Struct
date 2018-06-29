@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\Default.Project.settings" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{41CF79F3-FD97-401F-90B5-A64ADC82F2BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VVVV.Struct.Factories</RootNamespace>
+    <AssemblyName>Struct.Factories</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <!--<TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile />-->
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(DebugPath)\core\</OutputPath>
+    <!--<OutputPath>..\..\..\vvvv_50beta35.2_x64\packs\struct\core\</OutputPath>-->
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\deploy\packs\struct\core\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.Composition.CodePlex">
+      <HintPath>$(vvvvPath)\lib\core\System.ComponentModel.Composition.CodePlex.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="VVVV.Core">
+      <HintPath>$(vvvvPath)\lib\core\VVVV.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="VVVV.Hosting">
+      <HintPath>$(vvvvPath)\lib\core\VVVV.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="VVVV.PluginInterfaces">
+      <HintPath>$(vvvvPath)\lib\core\VVVV.PluginInterfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VVVV.Utils">
+      <HintPath>$(vvvvPath)\lib\core\VVVV.Utils.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseFieldTypeRegistry.cs" />
+    <Compile Include="ContainerRegistyUtils.cs" />
+    <Compile Include="DeclarationFactory.cs" />
+    <Compile Include="PrimitivesFieldTypeRegistry.cs" />
+    <Compile Include="CSFieldTypeRegistry.cs" />
+    <Compile Include="FactoryInterfaces.cs" />
+    <Compile Include="IStructFactory.cs" />
+    <Compile Include="NullContainerRegistry.cs" />
+    <Compile Include="NullFieldTypeRegistry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuntimeFieldTypeRegistry.cs" />
+    <Compile Include="SpreadContainerRegistry.cs" />
+    <Compile Include="StreamContainerRegistry.cs" />
+    <Compile Include="VLFieldTypeRegistry.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{1e0cd216-7786-4162-b5b8-68ff3345e71e}</Project>
+      <Name>Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

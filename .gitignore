@@ -20,3 +20,9 @@ obj/
 *.suo
 *.user
 *.sln.docstates
+
+#develop debug files
+wrk/
+
+#deploy
+deploy/
