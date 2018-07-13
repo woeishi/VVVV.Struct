@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\deploy\packs\struct\core\</OutputPath>
+    <OutputPath>..\deploy\packs\struct\core\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,9 +42,11 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="VVVV.Core">
       <HintPath>$(vvvvPath)\lib\core\VVVV.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="VVVV.Hosting">
       <HintPath>$(vvvvPath)\lib\core\VVVV.Hosting.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="VVVV.PluginInterfaces">
       <HintPath>$(vvvvPath)\lib\core\VVVV.PluginInterfaces.dll</HintPath>
