@@ -47,7 +47,7 @@ namespace VVVV.Struct.Nodes
             IOManager.SetLengthAllIOs(FStructIn.SliceCount);
             for (int i = 0; i<FStructIn.SliceCount; i++)
             {
-                if (FStructOut[i] != FStructIn[i] || FStructOut[i].Name != FStructIn[i].Name)
+                if (FStructOut[i] != FStructIn[i] || FStructOut[i]?.Name != FStructIn[i]?.Name)
                     FStructOut[i] = FStructIn[i];
                 if (FStructIn[i] != null)
                 {
