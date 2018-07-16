@@ -270,6 +270,11 @@ namespace VVVV.Struct.Hosting
 
         void EditorCreateDeclaration(DeclarationUI ui, IStructDeclarer declarer, string newName, string newFields)
         {
+            if (FDeclarationFactory.WellformedDeclarationName(newName))
+            {
+                ui.AppendError($"Declaration name malformed");
+                return;
+            }
             Declaration d = FDeclarationFactory.Get(newName);
             if (d == null)
             {
@@ -289,6 +294,11 @@ namespace VVVV.Struct.Hosting
             if (oldDecl.Name != newName && FDeclarationFactory.Get(newName) != null)
             {
                 ui.AppendError($"Declaration named '{newName}' already exists");
+                return;
+            }
+            else if (!FDeclarationFactory.WellformedDeclarationName(newName))
+            {
+                ui.AppendError($"Declaration name malformed");
                 return;
             }
             var d = FDeclarationFactory.Create(newName, newFields);

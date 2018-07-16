@@ -55,6 +55,8 @@ namespace VVVV.Struct.Factories
         }
 
         //---------------------------
+        public bool WellformedDeclarationName(string name) => Serializer.WellformedDeclarationName(name);
+
         public Declaration Get(string name)
         {
             return FDeclarations.ContainsKey(name) ? FDeclarations[name] : null;

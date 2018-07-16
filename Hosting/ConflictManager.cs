@@ -44,7 +44,7 @@ namespace VVVV.Struct.Hosting
 
         private void OnSelectionTextChanged(object sender, string e)
         {
-            if (FConflict != null)
+            if (FConflict != null && (Serializer.WellformedDeclarationName(e)))
             {
                 var equalsExisting = e == FExisting.Name;
                 var enableSplit = !equalsExisting;

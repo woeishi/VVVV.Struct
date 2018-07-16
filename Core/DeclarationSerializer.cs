@@ -6,6 +6,7 @@ namespace VVVV.Struct.Core
 {
     public sealed class Serializer
     {
+        static readonly Regex FDeclNameRegex;
         static readonly Regex FDeclRegex;
         static readonly Regex FSplitRegex;
         static readonly Regex FParseRegex;
@@ -14,19 +15,23 @@ namespace VVVV.Struct.Core
 
         static Serializer()
         {
-            FDeclRegex = new Regex("(^\\s*(?<name>\\w+)\\s*{\\s*(?<body>.*)\\s*}\\s*$)");
+            FDeclNameRegex = new Regex("^\\s*(?<name>\\S+)\\s*$");
+            FDeclRegex = new Regex("(^\\s*(?<name>\\S+)\\s*{\\s*(?<body>.*)\\s*}\\s*$)");
             FSplitRegex = new Regex(@"(?(?<=;)\n*|\n)+");
             FParseRegex = new Regex("(^\\s*(?<type>[\\w|\\.]+?\\s+)?(?<name>\\w+)(\\s*=\\s*(?!;)(?<default>[^\\s;]*))?;*?$)");
         }
+
+        public static bool WellformedDeclarationName(string name) => FDeclNameRegex.IsMatch(name);
 
         public static Declaration ReadDeclaration(string text)
         {
             if (text.StartsWith("{"))
                 return DeclarationSerializer_v2rc15.Read(text);
-
             else
             {
                 var m = FDeclRegex.Match(text);
+                if (!m.Groups["name"].Success)
+                    throw new ArgumentException("could not extract a declaration name from: " + text);
                 return new Declaration(m.Groups["name"].Value, ReadBody(m.Groups["body"].Value));
             }
         }
