@@ -270,7 +270,7 @@ namespace VVVV.Struct.Hosting
 
         void EditorCreateDeclaration(DeclarationUI ui, IStructDeclarer declarer, string newName, string newFields)
         {
-            if (FDeclarationFactory.WellformedDeclarationName(newName))
+            if (!FDeclarationFactory.WellformedDeclarationName(newName))
             {
                 ui.AppendError($"Declaration name malformed");
                 return;
