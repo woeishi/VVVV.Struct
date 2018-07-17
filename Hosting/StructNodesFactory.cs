@@ -205,12 +205,14 @@ namespace VVVV.Struct.Hosting
                 }
             };
             declareEmit.Cache.Changed += (s) => LoadDeclaration(nodeHost, declarer, s[0]); //only for startup
-            
+
             if (string.IsNullOrWhiteSpace(declareEmit.Cache[0]))
+            {
                 declareEmit.Cache[0] = FDeclarationFactory.Get("Template").ToString();
+                LoadDeclaration(nodeHost, declarer, declareEmit.Cache[0]);
+            }
             //else
             //    declareEmit.Cache[0] = declareEmit.Cache[0]; //HACK! making sure to get a callback once vvvv is configuring for the first time
-            //LoadDeclaration(nodeHost, declarer, declareEmit.Cache[0]);
         }
 
         
