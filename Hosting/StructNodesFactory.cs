@@ -133,7 +133,12 @@ namespace VVVV.Struct.Hosting
                 var nodeHost = (declarer as IStructDeclareEmit).IOFactory.PluginHost;
                 var label = nodeHost.GetPin("Descriptive Name")?.GetSpread(); //on create pins are null
                 if (label != text)
-                    nodeHost.GetPin("Descriptive Name")?.SetSpread(text);
+                {
+                    var id = nodeHost.GetID();
+                    var msg = $"<PATCH><NODE id=\"{id}\"><PIN pinname=\"Descriptive Name\" slicecount=\"1\" values=\"{text}\"></PIN></NODE></PATCH>";
+                    FHDEHost.SendXMLSnippet(nodeHost.ParentNode.GetNodeInfo().Filename, msg, false);
+                    //nodeHost.GetPin("Descriptive Name")?.SetSpread(text); //gui doesn't save it this way
+                }
             };
         }
 
