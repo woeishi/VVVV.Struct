@@ -26,6 +26,9 @@ namespace VVVV.Struct.Nodes
         [Output("Assembly")]
         public ISpread<string> FAssembly;
 
+        [Output("Assembly Location")]
+        public ISpread<string> FLocation;
+
         public void Evaluate(int spreadmax)
         {
             if (FUpdate[0])
@@ -34,18 +37,22 @@ namespace VVVV.Struct.Nodes
                 FInput.GetUpstreamInterface(out data);
                 FName.SliceCount = 0;
                 FAssembly.SliceCount = 0;
+                FLocation.SliceCount = 0;
                 if (data != null)
                 {
                     var t = data.GetType();
                    
                     FName.Add(t.FullName);
                     FAssembly.Add(t.Assembly.FullName);
+                    FLocation.Add(t.Assembly.Location);
+
 
                     if (t.Name.Contains("DynamicTypeWrapper"))
                     {
                         t = t.GetField("Value").GetValue(data).GetType();
                         FName.Add(t.FullName);
                         FAssembly.Add(t.Assembly.FullName);
+                        FLocation.Add(t.Assembly.Location);
                     }
                     if (t.IsGenericType)
                     {
@@ -53,6 +60,7 @@ namespace VVVV.Struct.Nodes
                         {
                             FName.Add(it.FullName);
                             FAssembly.Add(it.Assembly.FullName);
+                            FLocation.Add(it.Assembly.Location);
                         }
                     }
                 }
