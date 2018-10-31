@@ -82,7 +82,7 @@ namespace VVVV.Struct.Nodes
         public void Evaluate(int spreadMax)
         {
             if (FEnabled.SliceCount == 0 || FEnabled[0] == false)
-                FStructOut.ResizeAndDismiss(spreadMax, () => IOManager.CreateStruct(Declaration));
+                FStructOut.ResizeAndDismiss(0, () => IOManager.CreateStruct(Declaration));
 
             else if (FEnabled[0])
             {
