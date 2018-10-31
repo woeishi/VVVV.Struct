@@ -20,11 +20,20 @@ namespace VVVV.Struct.Factories
             {
                 foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
                 {
-                    type = a.GetType(typestring, false, true);
-                    if (type != null && (!type.IsAbstract)) //static is also abstract&sealed
+                    try
                     {
-                        FMappings.Add(type.FullName.ToLower(), type);
-                        return true;
+                        type = a.GetType(typestring, false, true);
+                        //static is also abstract&sealed
+                        // \..\ is an exception to avoid loading from falsly loaded assemblies (notui)
+                        if (type != null && (!type.IsAbstract) && (!a.Location.Contains(@"\..\"))) 
+                        {
+                            FMappings.Add(type.FullName.ToLower(), type);
+                            return true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine(e);
                     }
                 }
                 type = null;

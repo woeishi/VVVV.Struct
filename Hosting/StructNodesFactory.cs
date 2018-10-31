@@ -58,7 +58,10 @@ namespace VVVV.Struct.Hosting
                     {
                         LoadExternalFactories(dx11FactoryPath);
                     }
-                    catch { }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine(e);
+                    }
                 }
             }
 
