@@ -5,7 +5,13 @@ namespace VVVV.Struct.Core
     public class Comment : ILine
     {
         public string Text { get; }
-        public Comment(string text) { Text = text; }
+        public Comment(string text)
+        {
+            if (text.EndsWith(";"))
+                Text = text;
+            else
+                Text = text + ";";
+        }
 
         public override string ToString() =>  Text;
     }
