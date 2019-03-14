@@ -139,20 +139,16 @@ namespace VVVV.Struct.Factories
         }
         string ToString<T>(IInStream<T> source)
         {
-            string result = string.Empty;
-            using (var r = source.GetReader())
+            string result = (source.Length > 1) ? $"({source.Length}) " : string.Empty;
+            if (source.Length > 0)
             {
-                while (!r.Eos)
+                using (var r = source.GetReader())
                 {
                     var item = r.Read();
-                    if (item == null)
-                        result += "'null'";
-                    else
-                        result += item.ToString();
-                    result += ", ";
+                    result += (item == null) ? "'null'" : item.ToString();
                 }
             }
-            return result.Substring(0, result.Length - 2);
+            return result;
         }
     }
 }

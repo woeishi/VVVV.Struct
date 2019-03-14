@@ -125,16 +125,13 @@ namespace VVVV.Struct.Factories
         }
         string ToString<T>(ISpread<T> source)
         {
-            string result = string.Empty;
-            foreach (var item in source)
+            string result = (source.SliceCount > 1) ? $"({source.SliceCount}) " : string.Empty;
+            if (source.SliceCount > 0)
             {
-                if (item == null)
-                    result += "'null'";
-                else
-                    result += item.ToString();
-                result += ", ";
+                var item = source[0];
+                result += (item == null) ? "'null'" : item.ToString();
             }
-            return result.Substring(0, result.Length - 2);
+            return result;
         }
     }
 }
