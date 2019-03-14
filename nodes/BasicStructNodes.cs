@@ -110,36 +110,4 @@ namespace VVVV.Struct.Nodes
         //    return result;
         //}
 	}
-
-    #region PluginInfo
-    [PluginInfo(Name = "AsString", Category = "Struct", Help = "", Author = "woei")]
-    #endregion PluginInfo
-    public class AsTextStructNode : IPluginEvaluate
-    {
-        #region fields & pins
-        [Input("Input")]
-        public ISpread<Core.Struct> FInput;
-
-        [Output("Output")]
-        public ISpread<ISpread<string>> FText;
-        #endregion fields & pins
-
-        public void Evaluate(int spreadMax)
-        {
-            FText.SliceCount = FInput.SliceCount;
-            for (int o = 0; o < FInput.SliceCount; o++)
-            {
-                if (FInput[o] == null)
-                    break;
-
-                FText[o].SliceCount = FInput[o].Fields.Count;
-                int i = 0;
-                foreach (var f in FInput[o].Fields)
-                {
-                    FText[o][i] = f.Name + ": " + f.ContainerRegistry.ToString(FInput[o][f]);
-                    i++;
-                }
-            }
-        }
-    }
 }

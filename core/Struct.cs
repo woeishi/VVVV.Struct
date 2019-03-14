@@ -79,5 +79,13 @@ namespace VVVV.Struct.Core
                     return false;
             return true;
         }
+
+        public override string ToString()
+        {
+            var result = $"{Name}:\n";
+            foreach (var kv in FData)
+                result += $"-{kv.Key.Name}: {kv.Key.ContainerRegistry.ToString(kv.Value)}\n";
+            return result;
+        }
     }
 }
