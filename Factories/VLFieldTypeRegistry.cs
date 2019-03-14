@@ -48,7 +48,8 @@ namespace VVVV.Struct.Factories
                     if (runtimehost != null)
                     {
                         EventInfo updateEvent = runtimehost.GetType().GetEvent("Updated");
-                        var d = Delegate.CreateDelegate(updateEvent.EventHandlerType, this, "SyncAssembly");
+                        var mInfo = this.GetType().GetMethod("SyncAssembly", BindingFlags.Instance | BindingFlags.NonPublic);
+                        var d = Delegate.CreateDelegate(updateEvent.EventHandlerType, this, mInfo, true); 
                         updateEvent.AddEventHandler(runtimehost, d);
                         FHDE.MainLoop.OnPrepareGraph -= MainLoop_OnPrepareGraph;
                     }
@@ -69,7 +70,7 @@ namespace VVVV.Struct.Factories
             return false;
         }
 
-        void SyncAssembly(object sender, EventArgs e)
+        void SyncAssembly(object sender, dynamic e)
         {
             foreach (var kv in FMappings)
             {
