@@ -3,13 +3,19 @@ using System.Collections.Generic;
 
 namespace VVVV.Struct.Core
 {
+    public interface IStruct : IEquatable<IStruct>
+    {
+        string Name { get; }
+        IReadOnlyCollection<Field> Fields { get; }
+    }
+
     public class Sync
     {
         public event EventHandler Requested;
         public void Request() => Requested?.Invoke(this, EventArgs.Empty);
     }
 
-    public class Struct
+    public class Struct : IStruct
     {
         readonly string FName;
         public string Name => FName;
@@ -60,6 +66,18 @@ namespace VVVV.Struct.Core
         {
             //Sync[field].Request();
             return field.ContainerRegistry.CloneData(this[field]);
+        }
+
+        public bool Equals(IStruct other)
+        {
+            if (this.Name != other.Name)
+                return false;
+            if (this.FData.Count != other.Fields.Count)
+                return false;
+            foreach (var f in other.Fields)
+                if (!this.FData.ContainsKey(f))
+                    return false;
+            return true;
         }
     }
 }

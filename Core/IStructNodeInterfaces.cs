@@ -1,8 +1,8 @@
 ﻿namespace VVVV.Struct.Core
 {
-    public interface IStruct { }
+    public interface IStructNode { }
 
-    public interface IStructIO : IStruct
+    public interface IStructIO : IStructNode
     {
         //[Import] inheriting attributes not supported
         IIOManager IOManager { get; set; }

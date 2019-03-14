@@ -6,7 +6,7 @@ using VVVV.Struct.Core;
 
 namespace VVVV.Struct.Hosting
 {
-    public interface IStructEmit : IStruct
+    public interface IStructEmit : IStructNode
     {
         [Import]
         IIOFactory IOFactory { get; }

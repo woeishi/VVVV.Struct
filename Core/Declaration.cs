@@ -5,22 +5,22 @@ namespace VVVV.Struct.Core
 {
     public interface ILine { }
 
-    public class Declaration : IEquatable<Declaration>
+    public class Declaration : IStruct, IEquatable<Declaration>
     {
         public string Name { get; private set; }
 
-        public IReadOnlyCollection<Field> Fields { get; }
+        public IReadOnlyCollection<Field> Fields => fields;
+        List<Field> fields;
         public List<ILine> Lines { get; }
 
         public Declaration(string name, IEnumerable<ILine> lines)
         {
             Name = name;
             Lines = new List<ILine>(lines);
-            List<Field> fs = new List<Field>();
+            fields = new List<Field>();
             foreach (var l in lines)
                 if (l as Field != null)
-                    fs.Add(l as Field);
-            Fields = new List<Field>(fs);
+                    fields.Add(l as Field);
         }
 
         public bool Equals(Declaration other)
@@ -40,6 +40,19 @@ namespace VVVV.Struct.Core
             return true;
         }
 
+        public bool Equals(IStruct other)
+        {
+            if (this.Name != other.Name)
+                return false;
+            if (this.Fields.Count != other.Fields.Count)
+                return false;
+            foreach (var f in other.Fields)
+                if (fields.IndexOf(f) < 0)
+                    return false;
+                
+            return true;
+        }
+
         public override string ToString()
         {
             var ret = Name + "{";
@@ -47,5 +60,7 @@ namespace VVVV.Struct.Core
                 ret += l;
             return ret+"}";
         }
+
+        
     }
 }
