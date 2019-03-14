@@ -18,7 +18,7 @@ namespace VVVV.Struct.Core
             FDeclNameRegex = new Regex("^\\s*(?<name>\\S+)\\s*$");
             FDeclRegex = new Regex("(^\\s*(?<name>\\S+)\\s*{\\s*(?<body>.*)\\s*}\\s*$)");
             FSplitRegex = new Regex(@"(?(?<=;)\n*|\n)+");
-            FParseRegex = new Regex("(^\\s*(?<type>[\\w|\\.]+?\\s+)?(?<name>\\w+)(\\s*=\\s*(?!;)(?<default>[^\\s;]*))?;*?$)");
+            FParseRegex = new Regex("(^\\s*(?<type>[\\w|\\.]+?\\s+)?(?<name>\\w+)(\\s*=\\s*(?!;)(?<default>[^;]*))?;*?$)");
         }
 
         public static bool WellformedDeclarationName(string name) => FDeclNameRegex.IsMatch(name);
