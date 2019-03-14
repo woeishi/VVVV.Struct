@@ -5,7 +5,8 @@ using System.ComponentModel.Composition;
 
 namespace VVVV.Struct.Nodes
 {
-    [PluginInfo(Name = "Filter", Category = "Struct", Author = "woei")]
+    [PluginInfo(Name = "Filter", Category = "Struct", Author = "woei",
+        Help = "Selects all struct of the input, which match the given name.")]
     public class FilterNode : IPluginEvaluate
     {
         #region fields & pins
@@ -46,19 +47,17 @@ namespace VVVV.Struct.Nodes
     }
 
     #region PluginInfo
-    [PluginInfo(Name = "Info", 
-				Category = "Struct", 
-				Help = "outputs basic information on the incoming structs", 
-				Author = "woei")]
-	#endregion PluginInfo
-	public class InfoNode : IPluginEvaluate
-	{
-		#region fields & pins
-		[Input("Input")]
-		public ISpread<Core.Struct> FInput;
+    [PluginInfo(Name = "Info", Category = "Struct", Author = "woei",
+        Help = "outputs basic information on the incoming structs")]
+    #endregion PluginInfo
+    public class InfoNode : IPluginEvaluate
+    {
+        #region fields & pins
+        [Input("Input")]
+        public ISpread<Core.Struct> FInput;
 
-		[Output("Struct Name")]
-		public ISpread<string> FName;
+        [Output("Struct Name")]
+        public ISpread<string> FName;
 
         //[Output("Source Node Path")]
         //public ISpread<string> FSrcNodePath;
@@ -70,12 +69,12 @@ namespace VVVV.Struct.Nodes
         IHDEHost FHDE;
         #endregion fields & pins
 
-        public void Evaluate(int spreadMax) 
-		{
-			FName.SliceCount = FInput.SliceCount;
+        public void Evaluate(int spreadMax)
+        {
+            FName.SliceCount = FInput.SliceCount;
             //FSrcNode.SliceCount = FInput.SliceCount;
-			for (int i=0; i<FInput.SliceCount; i++)
-			{
+            for (int i = 0; i < FInput.SliceCount; i++)
+            {
                 if (FInput[i] != null)
                 {
                     FName[i] = FInput[i].Name;
@@ -91,23 +90,7 @@ namespace VVVV.Struct.Nodes
                     //FSrcNode[i] = string.Empty;
                     //FSrcNodePath[i] = string.Empty;
                 }
-			}
-			
-		}
-
-        //string CreateReadablePath(string path)
-        //{
-        //    var n = FHDE.GetNodeFromPath(path);
-        //    string result = string.Format("{0} [{1}]",n.NodeInfo.Name,n.ID);
-        //    while (n.Parent.Name!="root")
-        //    {
-        //        n = n.Parent;
-        //        if (n.Parent.Name == "root")
-        //            result = n.Name+"/"+result;
-        //        else
-        //            result = string.Format("{0} [{1}]/{2}",n.Name,n.ID,result);
-        //    }
-        //    return result;
-        //}
-	}
+            }
+        }
+    }
 }

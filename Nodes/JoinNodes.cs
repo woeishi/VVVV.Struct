@@ -7,7 +7,8 @@ using StructType = VVVV.Struct.Core.Struct;
 
 namespace VVVV.Struct.Nodes
 {
-    [PluginInfo(Name = "Join", Category = "Struct", Author="woei", AutoEvaluate = true)]
+    [PluginInfo(Name = "Join", Category = "Struct", Author="woei", AutoEvaluate = true,
+        Help = "Set data on a struct (~a named collection of arbitrary pins); declaring a new one or selecting an existing one.")]
     public class JoinStructNode : IPluginEvaluate, IStructFieldSetter, IStructDeclarer, IPartImportsSatisfiedNotification
     {
         [Input("Enabled", Order = 500, IsSingle = true, DefaultBoolean = true, Visibility = PinVisibility.OnlyInspector)]
@@ -53,7 +54,9 @@ namespace VVVV.Struct.Nodes
         public void Evaluate(int SpreadMax) { }
     }
 
-    [PluginInfo(Name = "Join", Category = "Struct", Version = "Bin", Author="woei", AutoEvaluate = true)]
+    [PluginInfo(Name = "Join", Category = "Struct", Version = "Bin", Author="woei", AutoEvaluate = true,
+        Help = @"Set data on a struct (~a named collection of arbitrary pins); declaring a new one or selecting an existing one.
+        Bin Size version cannot make use of a lot of performance optimizations, consider using the simple one.")]
     public class JoinBinStructNode : IPluginEvaluate, IStructFieldSetter, IStructDeclarer, IPartImportsSatisfiedNotification
     {
         [Input("Enabled", Order = 500, IsSingle = true, DefaultBoolean = true, Visibility = PinVisibility.OnlyInspector)]

@@ -7,7 +7,8 @@ using StructType = VVVV.Struct.Core.Struct;
 
 namespace VVVV.Struct.Nodes
 {
-    [PluginInfo(Name = "Split", Category = "Struct", Author="woei", AutoEvaluate = true)]
+    [PluginInfo(Name = "Split", Category = "Struct", Author="woei", AutoEvaluate = true,
+        Help = "Get data of a struct (~a named group of arbitrary pins); declaring a new one or selecting an existing one.")]
     public class SplitStructNode : IPluginEvaluate, IStructFieldGetter, IStructDeclarer
     {
         [Input("Input")]
@@ -68,7 +69,9 @@ namespace VVVV.Struct.Nodes
         }
     }
 
-    [PluginInfo(Name = "SplitAll", Category = "Struct", Author="woei", AutoEvaluate = true)]
+    [PluginInfo(Name = "SplitAll", Category = "Struct", Author="woei", AutoEvaluate = true,
+        Help = @"Get data of all input structs (~named group of arbitrary pins); declaring a new one or selecting an existing one.
+                In case you just need the data of one struct, use the simple Split node for better performance")]
     public class SplitAllStructNode : IPluginEvaluate, IStructFieldGetter, IStructDeclarer, IPartImportsSatisfiedNotification
     {
         [Input("Input")]

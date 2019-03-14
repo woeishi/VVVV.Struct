@@ -6,7 +6,8 @@ using StructType = VVVV.Struct.Core.Struct;
 
 namespace VVVV.Struct.Nodes
 {
-    [PluginInfo(Name = "GetField", Category = "Struct", Author = "woei")]
+    [PluginInfo(Name = "GetField", Category = "Struct", Author = "woei",
+        Help = "Gets data of the specified fields if found on any of the input structs")]
     public class GetFieldStructNode : IPluginEvaluate, IStructFieldGetter, IPartImportsSatisfiedNotification
     {
         [Config("Fields", IsSingle = true)]
@@ -65,7 +66,8 @@ namespace VVVV.Struct.Nodes
         }
     }
 
-    [PluginInfo(Name = "SetField", Category = "Struct", Author = "woei")]
+    [PluginInfo(Name = "SetField", Category = "Struct", Author = "woei",
+        Help = "Sets data of the specified fields if found on any of the input structs")]
     public class SetFieldStructNode : IPluginEvaluate, IStructFieldSetter, IPartImportsSatisfiedNotification
     {
         [Config("Fields", IsSingle = true)]

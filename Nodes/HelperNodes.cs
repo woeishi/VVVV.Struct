@@ -9,8 +9,9 @@ namespace VVVV.Struct.Nodes
 {
     
 
-        #region PluginInfo
-        [PluginInfo(Name = "Type", Category = "Struct", Help = "", Author = "woei")]
+    #region PluginInfo
+    [PluginInfo(Name = "Type", Category = "Struct", Author = "woei",
+        Help = "Gets type information of the connected input.")]
     #endregion PluginInfo
     public class GetFieldtypeNode : IPluginEvaluate
     {
