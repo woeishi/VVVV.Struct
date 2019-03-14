@@ -1,0 +1,51 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
+   <PATCH nodename="D:\develop\VVVV.Struct\deploy\packs\struct\demos\041_sub.v4p" systemname="041_sub" filename="D:\develop\VVVV.Struct\deploy\packs\struct\demos\041_sub.v4p">
+   <BOUNDS type="Window" left="5320" top="6096" width="3136" height="2592">
+   </BOUNDS>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
+   <PACK Name="addonpack" Version="36.0.0">
+   </PACK>
+   <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="0">
+   <BOUNDS type="Node" left="736" top="688" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="736" top="688" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="11192" top="8344" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="ConflictDemo">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|ConflictDemo{double ValueIn;string StringIn;}|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="ValueIn" visible="1">
+   </PIN>
+   <PIN pinname="StringIn" slicecount="1" values="|all good|">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="1" systemname="IOBox (Node)">
+   <BOUNDS type="Box" left="744" top="1256" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="744" top="1256" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Output">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Output" dstnodeid="1" dstpinname="Input Node">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="2" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="736" top="272" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="736" top="272" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="2" srcpinname="Y Output Value" dstnodeid="0" dstpinname="ValueIn">
+   </LINK>
+   </PATCH>

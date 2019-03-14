@@ -74,6 +74,7 @@
   <PropertyGroup>
     <PostBuildEvent>
 xcopy /s /y $(ProjectDir)helppatches\*.v4p $(TargetDir)
+xcopy /s /y $(ProjectDir)..\demos\*.v4p $(TargetDir)..\demos\
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,503 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
+   <PATCH nodename="D:\develop\VVVV.Struct\demos\01_Demo.v4p" systemname="01_Demo" filename="D:\develop\VVVV.Struct\demos\01_Demo.v4p" scrollx="8" scrolly="-360">
+   <BOUNDS type="Window" left="2488" top="400" width="8920" height="10936">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Struct Intro Demo|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="208" top="616" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="616" width="5048" height="408">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|because performance, tidiness and reusability matter|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" values="10">
+   </PIN>
+   </NODE>
+   <NODE nodename="Join (Struct)" componentmode="InAWindow" id="0" systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll">
+   <BOUNDS type="Node" left="136" top="5888" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="136" top="5888" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DemoLabel">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|DemoLabel{matrix Transform;string Text;float Alpha = 1;}|">
+   </PIN>
+   <BOUNDS type="Window" left="0" top="1832" width="2608" height="2488">
+   </BOUNDS>
+   <PIN pinname="DoubleIn" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="StringIn" visible="1" slicecount="1" values="|hello my dear|">
+   </PIN>
+   <PIN pinname="ColorIn" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Text" slicecount="1" visible="1" values="|Label 1|">
+   </PIN>
+   <PIN pinname="Alpha" visible="1">
+   </PIN>
+   </NODE>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
+   <PACK Name="addonpack" Version="36.0.0">
+   </PACK>
+   <NODE systemname="Split (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Split (Struct)" componentmode="InAWindow" id="10">
+   <BOUNDS type="Node" left="4616" top="9176" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4616" top="9176" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="0" top="4296" width="2616" height="2320">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DemoImage">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|DemoImage{dx11texture2d texture;float Alpha;float Position;math.bezier.bezierspline Spline;}|">
+   </PIN>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="DoubleIn" visible="1">
+   </PIN>
+   <PIN pinname="ColorIn" visible="1">
+   </PIN>
+   <PIN pinname="StringIn" visible="1">
+   </PIN>
+   <PIN pinname="Last" visible="1">
+   </PIN>
+   <PIN pinname="Position" visible="1">
+   </PIN>
+   <PIN pinname="Alpha" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="17" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="280" top="1160" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="280" top="1160" width="7928" height="1176">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|with any project growing beyond a single patch getting data / drawing links from one subpatch deep down to another will get very cumbersome and messy. current solutions are either avoiding too detailed structuring or start sending everything with Send and Receives.&cr;&lf;&cr;&lf;in case you ever had to debug a project of someone else with a lot of Sends and Receives, you know the pain.&cr;&lf;Where does this send go to? is it even still needed? where does the value of the R come from? Bin Size? which belong together to get it working?|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="20" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="272" top="2544" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="272" top="2544" width="7800" height="352">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|struct lets you bundle pins of literally any type together and give it a speaking name|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" values="10">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="21" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="256" top="2904" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="256" top="2904" width="8360" height="864">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|any type means, all native pins, any plugin type, anything of the dx11 pack, anything you define in a dyamic plugin and even all vl types. and, of course, struct of struct is also possible&cr;&lf;&cr;&lf;while you get rid of a lot of links, dataflow (and thus evaluation order) is still visible.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="23">
+   <BOUNDS type="Node" left="4144" top="6344" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4144" top="6344" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="168" top="4456" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DemoImage">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|DemoImage{dx11texture2d texture;float Alpha;float Position;math.bezier.bezierspline Spline;}|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="texture" visible="1">
+   </PIN>
+   <PIN pinname="Spline" visible="1">
+   </PIN>
+   <PIN pinname="Position" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="BezierSpline (2d Join)" filename="%VVVV%\lib\packs\VL.CoreLib.VVVV.0.79.17-g63a3d4ba77\vvvv\nodes\vl\VVVV.Bezier.Cubic.vl" nodename="BezierSpline (2d Join)" componentmode="Hidden" id="24">
+   <BOUNDS type="Node" left="6816" top="6720" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="BezierSpline" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="SetField (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="SetField (Struct)" componentmode="Hidden" id="26">
+   <BOUNDS type="Node" left="2944" top="8408" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2944" top="8408" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="6696" top="6728" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Fields" slicecount="1" values="|float Alpha;|">
+   </PIN>
+   <PIN pinname="Alpha" visible="1">
+   </PIN>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="27" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="3248" top="8048" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3248" top="8048" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.5">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Alpha">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="27" srcpinname="Y Output Value" dstnodeid="26" dstpinname="Alpha">
+   </LINK>
+   <NODE nodename="Join (Struct)" componentmode="Hidden" id="28" systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll">
+   <BOUNDS type="Node" left="1088" top="6408" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1088" top="6408" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DemoLabel">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|DemoLabel{matrix Transform;string Text;float Alpha = 1;}|">
+   </PIN>
+   <BOUNDS type="Window" left="9128" top="592" width="2944" height="2488">
+   </BOUNDS>
+   <PIN pinname="DoubleIn" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="StringIn" visible="1" slicecount="1" values="|hello my dear|">
+   </PIN>
+   <PIN pinname="ColorIn" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Text" slicecount="1" visible="1" values="|Label 2|">
+   </PIN>
+   <PIN pinname="Alpha" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="SplitAll (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="SplitAll (Struct)" componentmode="Hidden" id="29">
+   <BOUNDS type="Node" left="120" top="9176" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="120" top="9176" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="4080" top="8808" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DemoLabel">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|DemoLabel{matrix Transform;string Text;float Alpha = 1;}|">
+   </PIN>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Text" visible="1">
+   </PIN>
+   <PIN pinname="Alpha" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Cons (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Cons (Struct)" componentmode="Hidden" id="30">
+   <BOUNDS type="Node" left="120" top="7352" width="2944" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="120" top="7352" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="7048" top="9112" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Input 1" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Input 2" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Input Count" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Input 3" visible="1">
+   </PIN>
+   <PIN pinname="Input 4" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="28" srcpinname="Output" dstnodeid="30" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="0" srcpinname="Output" dstnodeid="30" dstpinname="Input 1">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="31" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="904" top="5624" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="904" top="5624" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="|Label 1|">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="31" srcpinname="Output String" dstnodeid="0" dstpinname="Text">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="32" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="1680" top="5616" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1680" top="5616" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Alpha">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="32" srcpinname="Y Output Value" dstnodeid="0" dstpinname="Alpha">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="33" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="1856" top="6160" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1856" top="6160" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="|Label 2|">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Text">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="33" srcpinname="Output String" dstnodeid="28" dstpinname="Text">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="34" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="2608" top="6104" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2608" top="6104" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Alpha">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="34" srcpinname="Y Output Value" dstnodeid="28" dstpinname="Alpha">
+   </LINK>
+   <NODE systemname="Halo (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Source\Halo.tfx" nodename="Halo (DX11.TextureFX)" componentmode="Hidden" id="35">
+   <BOUNDS type="Node" left="4144" top="5544" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="35" srcpinname="Texture Out" dstnodeid="23" dstpinname="texture">
+   </LINK>
+   <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="36">
+   <BOUNDS type="Node" left="5232" top="7128" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5232" top="7128" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="168" top="4456" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DemoImage">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|DemoImage{dx11texture2d texture;float Alpha;float Position;math.bezier.bezierspline Spline;}|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="texture" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Spline" visible="1">
+   </PIN>
+   <PIN pinname="Position" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="24" srcpinname="BezierSpline" dstnodeid="36" dstpinname="Spline">
+   </LINK>
+   <NODE systemname="BezierSpline (2d Join)" filename="%VVVV%\lib\packs\VL.CoreLib.VVVV.0.79.17-g63a3d4ba77\vvvv\nodes\vl\VVVV.Bezier.Cubic.vl" nodename="BezierSpline (2d Join)" componentmode="Hidden" id="37">
+   <BOUNDS type="Node" left="5744" top="5960" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="BezierSpline" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="37" srcpinname="BezierSpline" dstnodeid="23" dstpinname="Spline">
+   </LINK>
+   <LINK srcnodeid="23" srcpinname="Output" dstnodeid="30" dstpinname="Input 3">
+   </LINK>
+   <LINK srcnodeid="36" srcpinname="Output" dstnodeid="30" dstpinname="Input 4">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="38" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="808" top="9512" width="664" height="520">
+   </BOUNDS>
+   <BOUNDS type="Node" left="808" top="9512" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="2">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="29" srcpinname="Text" dstnodeid="38" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="39" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="1520" top="9512" width="656" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1520" top="9512" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Y Input Value" slicecount="2" values="0,">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="|0, 0|">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Alpha">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="29" srcpinname="Alpha" dstnodeid="39" dstpinname="Y Input Value">
+   </LINK>
+   <LINK srcnodeid="30" srcpinname="Output" dstnodeid="26" dstpinname="Input">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="40" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="6240" top="8808" width="296" height="272">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6240" top="8808" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Last">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="40" srcpinname="Y Output Value" dstnodeid="10" dstpinname="Last">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="41" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="5192" top="5992" width="544" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5192" top="5992" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.333">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Position">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="41" srcpinname="Y Output Value" dstnodeid="23" dstpinname="Position">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="42" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="6264" top="6736" width="536" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6264" top="6736" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.66">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Position">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="42" srcpinname="Y Output Value" dstnodeid="36" dstpinname="Position">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="43" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="5696" top="9512" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5696" top="9512" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Position" dstnodeid="43" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="46" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="216" top="3920" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="216" top="3920" width="7968" height="448">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|declare a struct type in the Window of the node, changes will synchronize on all Join/Split with the same name|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" values="9">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="26" srcpinname="Output" dstnodeid="10" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="26" srcpinname="Output" dstnodeid="29" dstpinname="Input">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="47" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="5168" top="9512" width="488" height="224">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5168" top="9512" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Alpha">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Alpha" dstnodeid="47" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="48" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="216" top="4424" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="216" top="4424" width="8224" height="1048">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|this way a component can easily define new variables which can be changed. and also the other way round, upstream logic can &apos;publish&apos; new properties&cr;&lf;&cr;&lf;it encourages to think more in components/objects/interfaces.&cr;&lf;pins with the same name can be handled simulatneously regardless of the struct name (interface like)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="49" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="4552" top="7984" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4552" top="7984" width="3240" height="496">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|dynamic type pins like vl or from dynamic plugins will be notified, and refreshed on change|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   </PATCH>
