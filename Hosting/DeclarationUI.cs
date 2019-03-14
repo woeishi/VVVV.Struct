@@ -148,6 +148,8 @@ namespace VVVV.Struct.Hosting
                     FError.Visible = true;
             };
 
+            FTooltip.SetToolTip(FNew, "Ctrl + D");
+            FTooltip.SetToolTip(FSave, "Ctrl + S");
             FTooltip.SetToolTip(FBody, "type name [= default]" + Environment.NewLine +
                 "available shorthands:" + Environment.NewLine +
                 "bool, int, float, double, string, color, matrix, vectorN, stream, struct, mouse, keyboard, touch, gesture;" + Environment.NewLine +
