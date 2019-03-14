@@ -22,5 +22,7 @@ namespace VVVV.Struct.Core
 
         void WriteToIOBins(ref Struct str, int index = 0);
         void WriteToIOs(ref Struct str);
+
+        void WriteNilToIOBins(int index = 0);
     }
 }

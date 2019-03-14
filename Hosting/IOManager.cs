@@ -206,5 +206,12 @@ namespace VVVV.Struct.Hosting
                 if (FIOContainers[f].IsVisible)
                     f.ContainerRegistry.WriteToIOBin(f, FIOContainers[f], ref str, index);
         }
+
+        public void WriteNilToIOBins(int index = 0)
+        {
+            foreach (var f in FIOContainers.Keys)
+                if (FIOContainers[f].IsVisible)
+                    f.ContainerRegistry.NilToIOBin(f, FIOContainers[f], index);
+        }
     }
 }

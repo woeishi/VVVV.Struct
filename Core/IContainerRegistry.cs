@@ -14,6 +14,7 @@ namespace VVVV.Struct.Core
         void ReadFromIOBin(Field field, IIOContainer ioContainer, ISpread<Struct> structs);
         void WriteToIO(Field field, IIOContainer ioContainer, ref Struct str);
         void WriteToIOBin(Field field, IIOContainer ioContainer, ref Struct str, int index = 0);
+        void NilToIOBin(Field field, IIOContainer ioContainer, int index = 0);
         string ToString(object rawIOObject);
     }
 }

@@ -50,6 +50,8 @@ namespace VVVV.Struct.Factories
 
         public virtual void WriteToIOBin(Field field, IIOContainer ioContainer, ref Core.Struct str, int index = 0) { }
 
+        public virtual void NilToIOBin(Field field, IIOContainer ioContainer, int index = 0) { }
+
         public virtual string ToString(object rawIOObject) => string.Empty;
     }
 }

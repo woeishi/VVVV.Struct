@@ -51,14 +51,16 @@ namespace VVVV.Struct.Nodes
                     FStructOut[i] = FStructIn[i];
                 if (FStructIn[i] != null)
                 {
-                    
                     var str = FStructIn[i];
                     IOManager.WriteToIOBins(ref str, i);
                     if (FNames[i] != str.Name)
                         FNames[i] = str.Name;
                 }
                 else
+                {
+                    IOManager.WriteNilToIOBins(i);
                     FNames[i] = "null";
+                }
             }
         }
     }

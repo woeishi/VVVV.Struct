@@ -107,6 +107,11 @@ namespace VVVV.Struct.Factories
             dest.AssignFrom(source);
         }
 
+        public void NilToIOBin(Field field, IIOContainer ioContainer, int index = 0)
+        {
+            dynamic dest = ioContainer.RawIOObject;
+            WriteStream(null, dest, index);
+        }
         public void WriteToIOBin(Field field, IIOContainer ioContainer, ref Core.Struct str, int index = 0)
         {
             dynamic source = str[field];
