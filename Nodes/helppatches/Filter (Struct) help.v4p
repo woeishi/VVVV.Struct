@@ -1,0 +1,189 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
+   <PATCH nodename="D:\develop\VVVV.Struct\Nodes\helppatches\Filter (Struct) help.v4p" scrollx="0" scrolly="-360" systemname="Filter (Struct) help" filename="D:\develop\VVVV.Struct\Nodes\helppatches\Filter (Struct) help.v4p">
+   <BOUNDS type="Window" left="280" top="592" width="9000" height="6000">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Filter (Struct)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Selects all struct of the input, which match the given name.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="Filter (Struct)" componentmode="Hidden" id="0" systemname="Filter (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll">
+   <BOUNDS type="Node" left="944" top="3080" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="944" top="3080" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Struct Name" visible="1">
+   </PIN>
+   <PIN pinname="Former Index" visible="1">
+   </PIN>
+   <PIN pinname="Filter Index" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Cons (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Cons (Struct)" componentmode="Hidden" id="4">
+   <BOUNDS type="Node" left="944" top="2168" width="1184" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="944" top="2168" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="11040" top="11464" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Input Count" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Input 2" visible="1">
+   </PIN>
+   <PIN pinname="Input 3" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="4" srcpinname="Output" dstnodeid="0" dstpinname="Input">
+   </LINK>
+   <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="5">
+   <BOUNDS type="Node" left="1520" top="1152" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1520" top="1152" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="11872" top="9632" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Template">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|Template{double DoubleIn;string StringIn;}|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="5" srcpinname="Output" dstnodeid="4" dstpinname="Input 2">
+   </LINK>
+   <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="6">
+   <BOUNDS type="Node" left="2072" top="1720" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2072" top="1720" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="11872" top="9632" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="FilterDemo">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|FilterDemo{int IntInput;}|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="IntInput" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="6" srcpinname="Output" dstnodeid="4" dstpinname="Input 3">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="7" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="1360" top="2744" width="1136" height="256">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1360" top="2744" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="FilterDemo">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="7" srcpinname="Output String" dstnodeid="0" dstpinname="Struct Name">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="8" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="1168" top="3656" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1168" top="3656" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Former Index|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Former Index" dstnodeid="8" dstpinname="Y Input Value">
+   </LINK>
+   <NODE systemname="Split (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Split (Struct)" componentmode="Hidden" id="10">
+   <BOUNDS type="Node" left="936" top="4248" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="936" top="4248" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="12800" top="10288" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="FilterDemo">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|FilterDemo{int IntInput;}|">
+   </PIN>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="IntInput" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Output" dstnodeid="10" dstpinname="Input">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="11" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="944" top="4752" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="944" top="4752" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="IntInput" dstnodeid="11" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="12" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="2072" top="1448" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2072" top="1448" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="11">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="12" srcpinname="Y Output Value" dstnodeid="6" dstpinname="IntInput">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="13" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="3952" top="2008" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3952" top="2008" width="3968" height="2496">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|a link of struct can carry various different struct types (with different names).&cr;&lf;&cr;&lf;while this is often very useful, since you can access and modifiy them with Get/SetField and the Split nodes only data of matching structs anyways, sometimes you want to select only certain struct types.|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
+   <PACK Name="addonpack" Version="36.0.0">
+   </PACK>
+   </PATCH>
