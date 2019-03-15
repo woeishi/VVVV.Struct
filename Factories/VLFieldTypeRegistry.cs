@@ -72,16 +72,8 @@ namespace VVVV.Struct.Factories
 
         void SyncAssembly(object sender, dynamic e)
         {
-            foreach (var kv in FMappings)
-            {
-                var t = FVLAss[0]?.GetType(kv.Key, false, true);
-                if (t != null && t != FMappings[kv.Key])
-                {
-                    FMappings[kv.Key] = t;
-                    TypeUpdated?.Invoke(this, kv.Key);
-                    return;
-                }
-            }
+            foreach (var t in FVLAss[0].DefinedTypes)
+                TypeUpdated?.Invoke(this, t.FullName.ToLower());
         }
 
         public virtual bool StringToType(string typestring, out Type type)
@@ -109,7 +101,7 @@ namespace VVVV.Struct.Factories
 
         public virtual bool TypeToString(Type type, out string typestring)
         {
-            typestring = type.Name.ToLower();
+            typestring = type.FullName.ToLower();
             if (FMappings.ContainsValue(type))
             {
                 foreach (var kv in FMappings)
