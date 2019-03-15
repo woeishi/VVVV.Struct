@@ -11,30 +11,23 @@
     <RootNamespace>VVVV.Struct.Core</RootNamespace>
     <AssemblyName>StructNodesFactory</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <!--<TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile />-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>$(DebugPath)\factories\</OutputPath>
-    <!--<OutputPath>..\..\vvvv_50beta35.2_x64\packs\struct\factories\</OutputPath>-->
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <StartAction>Program</StartAction>
-    <StartProgram>$(vvvvPath)\vvvv.exe</StartProgram>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\deploy\packs\struct\factories\</OutputPath>
+    <OutputPath>$(DeployPath)\factories\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <StartAction>Program</StartAction>
-    <StartProgram>$(vvvvPath)\vvvv.exe</StartProgram>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

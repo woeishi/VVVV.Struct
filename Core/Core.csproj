@@ -11,23 +11,20 @@
     <RootNamespace>VVVV.Struct.Core</RootNamespace>
     <AssemblyName>Struct.Core</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <!--<TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile />-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>$(DebugPath)\core\</OutputPath>
-    <!--<OutputPath>..\..\..\vvvv_50beta35.2_x64\packs\struct\core\</OutputPath>-->
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\deploy\packs\struct\core\</OutputPath>
+    <OutputPath>$(DeployPath)\core\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,12 +38,12 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
-    <Reference Include="VVVV.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="VVVV.Core">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(vvvvPath)\lib\core\VVVV.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="VVVV.Hosting, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="VVVV.Hosting">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(vvvvPath)\lib\core\VVVV.Hosting.dll</HintPath>
       <Private>False</Private>

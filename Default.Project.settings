@@ -4,6 +4,7 @@
 	<vvvvPath>$(MSBuildThisFileDirectory)..\vvvv_50beta36_x64</vvvvPath>
     <!-- <vvvvPath>$(MSBuildThisFileDirectory)..\vvvv_50alpha35.12_x64</vvvvPath> -->
     <DebugPath>$(vvvvPath)\packs\struct</DebugPath>
+    <DeployPath>$(MSBuildThisFileDirectory)\deploy\packs\struct\</DeployPath>
     <ReferencePath>$(vvvvPath)\lib\core\;$(vvvvPath)\lib\nodes\plugins\</ReferencePath>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />

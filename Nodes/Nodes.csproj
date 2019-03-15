@@ -11,23 +11,20 @@
     <RootNamespace>VVVV.Struct.Nodes</RootNamespace>
     <AssemblyName>Struct.Nodes</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <!--<TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile />-->
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>$(DebugPath)\nodes\</OutputPath>
-    <!--<OutputPath>..\..\..\vvvv_50beta35.2_x64\packs\struct\nodes\</OutputPath>-->
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\deploy\packs\struct\nodes\</OutputPath>
+    <OutputPath>$(DeployPath)\nodes\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
