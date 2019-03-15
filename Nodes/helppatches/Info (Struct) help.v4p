@@ -1,0 +1,185 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta38.1.dtd" >
+   <PATCH nodename="D:\_patching\_vvvv\vvvv_50beta38.1_x64\packs\struct\nodes\Info (Struct) help.v4p" systemname="Info (Struct) help" filename="D:\develop\VVVV.Struct\Nodes\helppatches\Info (Struct) help.v4p">
+   <BOUNDS type="Window" left="0" top="0" width="4840" height="5270">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="3" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="208" width="4760" height="424">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|Info (Struct)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="2" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <BOUNDS type="Box" left="208" top="560" width="4760" height="560">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|outputs basic information on the incoming structs|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   </NODE>
+   <NODE nodename="Info (Struct)" componentmode="Hidden" id="0" systemname="Info (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll">
+   <BOUNDS type="Node" left="268" top="2948" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="268" top="2948" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Struct Name" visible="1">
+   </PIN>
+   </NODE>
+   <PACK Name="dx11" Version="1.3.1">
+   </PACK>
+   <PACK Name="addonpack" Version="38.1.0">
+   </PACK>
+   <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="13">
+   <BOUNDS type="Node" left="270" top="1496" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="270" top="1496" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="4656" top="8336" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Template">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|Template{double DoubleIn;string StringIn;}|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="DoubleIn" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="StringIn" slicecount="1" visible="1" values="hello">
+   </PIN>
+   </NODE>
+   <NODE systemname="Cons (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Cons (Struct)" componentmode="Hidden" id="12">
+   <BOUNDS type="Node" left="270" top="2388" width="1776" height="256">
+   </BOUNDS>
+   <BOUNDS type="Box" left="270" top="2388" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="5520" top="11120" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Input Count" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Input 1" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Input 2" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="13" srcpinname="Output" dstnodeid="12" dstpinname="Input 1">
+   </LINK>
+   <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="11">
+   <BOUNDS type="Node" left="1990" top="2036" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1990" top="2036" width="1600" height="1600">
+   </BOUNDS>
+   <BOUNDS type="Window" left="9136" top="584" width="3392" height="2912">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="InfoDemo">
+   </PIN>
+   <PIN pinname="Cache" slicecount="1" values="|InfoDemo{double DoubleIn;string OtherString;}|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="DoubleIn" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="StringIn" slicecount="1" values="hello">
+   </PIN>
+   <PIN pinname="OtherString" slicecount="1" visible="1" values="vvvv">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="11" srcpinname="Output" dstnodeid="12" dstpinname="Input 2">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="10" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="270" top="1120" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="270" top="1120" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DoubleIn">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Y Output Value" dstnodeid="13" dstpinname="DoubleIn">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="9" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="1978" top="1560" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1978" top="1560" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="2">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DoubleIn">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="11" dstpinname="DoubleIn">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="8" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="3518" top="1500" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3518" top="1500" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="vvvv">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="OtherString">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="8" srcpinname="Output String" dstnodeid="11" dstpinname="OtherString">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="7" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="1788" top="1120" width="696" height="208">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1788" top="1120" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="hello">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="StringIn">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="7" srcpinname="Output String" dstnodeid="13" dstpinname="StringIn">
+   </LINK>
+   <LINK srcnodeid="12" srcpinname="Output" dstnodeid="0" dstpinname="Input">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="14">
+   <BOUNDS type="Box" left="280" top="3500" width="1170" height="680">
+   </BOUNDS>
+   <BOUNDS type="Node" left="280" top="3500" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="2">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Struct Name" dstnodeid="14" dstpinname="Input String">
+   </LINK>
+   </PATCH>

@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
-   <PATCH nodename="D:\develop\VVVV.Struct\deploy\packs\struct\demos\04_Versioning.v4p" systemname="03_Performance" filename="D:\develop\VVVV.Struct\demos\03_Performance.v4p" scrollx="8" scrolly="-360">
-   <BOUNDS type="Window" left="2488" top="400" width="8920" height="11888">
+   <PATCH nodename="D:\develop\VVVV.Struct\demos\04_Versioning.v4p" systemname="03_Performance" filename="D:\develop\VVVV.Struct\demos\03_Performance.v4p" scrollx="8" scrolly="-360">
+   <BOUNDS type="Window" left="-110" top="0" width="8680" height="10640">
    </BOUNDS>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="3" systemname="IOBox (String)">
    <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
@@ -31,19 +31,21 @@
    <PACK Name="addonpack" Version="36.0.0">
    </PACK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="17" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="280" top="1160" width="4760" height="560">
+   <BOUNDS type="Node" left="200" top="1160" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="280" top="1160" width="7896" height="1272">
+   <BOUNDS type="Box" left="200" top="1160" width="8240" height="1530">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|while working alone on all patches struct declarations will always stay in sync nicely.&cr;&lf;&cr;&lf;just don&apos;t forget, that once you change a declaration, all joins and splits are updated. therefore those patches will be marked dirty and you should save them.&cr;&lf;&cr;&lf;in order to be git and human readable friendly, the declaration is stored in a very short and concise style in v4ps xml pin value attribute:&cr;&lf;&cr;&lf;&cr;&lf;&cr;&lf; |">
    </PIN>
    <PIN pinname="Output String" slicecount="1" visible="0" values="||">
    </PIN>
+   <PIN pinname="Size" slicecount="1" values="8">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="20" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="296" top="2528" width="4760" height="560">
+   <BOUNDS type="Node" left="236" top="2684" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="296" top="2528" width="7800" height="352">
+   <BOUNDS type="Box" left="236" top="2684" width="7840" height="376">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|name{type fieldName( = default);...}|">
    </PIN>
@@ -51,11 +53,13 @@
    </PIN>
    <PIN pinname="Size" slicecount="1" values="10">
    </PIN>
+   <PIN pinname="Font" slicecount="1" values="|Courier New|">
+   </PIN>
    </NODE>
-   <NODE systemname="Split (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Split (Struct)" componentmode="InAWindow" id="60">
-   <BOUNDS type="Node" left="1760" top="8616" width="100" height="100">
+   <NODE systemname="Split (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Split (Struct)" componentmode="Hidden" id="60">
+   <BOUNDS type="Node" left="380" top="8856" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="1760" top="8616" width="1600" height="1600">
+   <BOUNDS type="Box" left="380" top="8856" width="1600" height="1600">
    </BOUNDS>
    <BOUNDS type="Window" left="6168" top="10104" width="3392" height="2912">
    </BOUNDS>
@@ -75,19 +79,21 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="101" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="312" top="3040" width="4760" height="560">
+   <BOUNDS type="Node" left="232" top="3126" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="312" top="3040" width="7856" height="824">
+   <BOUNDS type="Box" left="232" top="3126" width="8070" height="1170">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|in case you forgot to save you end up with different declarations with the same name, which is a conflict not visible to git, since it&apos;s missing the project context.&cr;&lf;&cr;&lf;this can also happen, if more people work on one application and commit different parts with overlapping structs.|">
    </PIN>
    <PIN pinname="Output String" slicecount="1" visible="0" values="||">
    </PIN>
+   <PIN pinname="Size" slicecount="1" values="8">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="102" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="328" top="3984" width="4760" height="560">
+   <BOUNDS type="Node" left="248" top="4330" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="328" top="3984" width="7800" height="352">
+   <BOUNDS type="Box" left="248" top="4330" width="7800" height="352">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|Conflict Manager|">
    </PIN>
@@ -97,7 +103,7 @@
    </PIN>
    </NODE>
    <NODE systemname="CreateNode (VVVV)" nodename="CreateNode (VVVV)" componentmode="Hidden" id="104">
-   <BOUNDS type="Node" left="3920" top="8632" width="100" height="100">
+   <BOUNDS type="Node" left="2540" top="8872" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Parent Patch" visible="1" slicecount="1" values="self">
    </PIN>
@@ -109,9 +115,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="106">
-   <BOUNDS type="Box" left="3920" top="7648" width="1400" height="240">
+   <BOUNDS type="Box" left="2540" top="7888" width="1400" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="3920" top="7648" width="0" height="0">
+   <BOUNDS type="Node" left="2540" top="7888" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values="042_conflict.v4p">
    </PIN>
@@ -127,9 +133,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="108">
-   <BOUNDS type="Box" left="6032" top="8192" width="480" height="480">
+   <BOUNDS type="Box" left="4652" top="8432" width="480" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="6032" top="8192" width="0" height="0">
+   <BOUNDS type="Node" left="4652" top="8432" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
@@ -147,19 +153,21 @@
    <LINK srcnodeid="108" srcpinname="Y Output Value" dstnodeid="104" dstpinname="Create Node">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="110" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="376" top="4640" width="4760" height="560">
+   <BOUNDS type="Node" left="246" top="4736" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="376" top="4640" width="7992" height="2616">
+   <BOUNDS type="Box" left="246" top="4736" width="8010" height="2730">
    </BOUNDS>
-   <PIN pinname="Input String" slicecount="1" visible="0" values="|when the system encounters a conflict on load, the conflict manager will pop up.&cr;&lf;&cr;&lf;on the left side you see the declarations already existing, on the right side the new one loaded.&cr;&lf;the red lines indicate the conflicts.&cr;&lf;&cr;&lf;so you have 3 options: left to right&cr;&lf;1) &apos;Use Existing&apos;: just use the existing one and discard the newly loaded difference&cr;&lf;&cr;&lf;2) &apos;Split&apos;: change the name (and the fields if you want) of the new one, leaving the existing ones untouched&cr;&lf;&cr;&lf;3) &apos;Use New&apos;: use the new one (which you can even edit to resolve any issues) overwriting the existing ones.&cr;&lf;&cr;&lf;&cr;&lf;|">
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|when the system encounters a conflict on load, the conflict manager will pop up.&cr;&lf;&cr;&lf;on the left side you see the declarations already existing, on the right side the new one loaded.&cr;&lf;the red lines indicate the conflicts.&cr;&lf;&cr;&lf;so you have 3 options: left to right&cr;&lf;1) &apos;Use Existing&apos;: just use the existing one and discard the newly loaded difference.&cr;&lf;&cr;&lf;2) &apos;Split&apos;: change the name (and the fields if you want) of the new one, leaving the existing ones untouched.&cr;&lf;&cr;&lf;3) &apos;Use New&apos;: use the new one (which you can even edit to resolve any issues) overwriting the existing ones.&cr;&lf;&cr;&lf;&cr;&lf;|">
    </PIN>
    <PIN pinname="Output String" slicecount="1" visible="0" values="||">
    </PIN>
+   <PIN pinname="Size" slicecount="1" values="8">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="111">
-   <BOUNDS type="Box" left="3480" top="9104" width="1248" height="224">
+   <BOUNDS type="Box" left="2230" top="9454" width="1248" height="224">
    </BOUNDS>
-   <BOUNDS type="Node" left="3480" top="9104" width="0" height="0">
+   <BOUNDS type="Node" left="2230" top="9454" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Default" slicecount="1" values="||">
    </PIN>
@@ -171,9 +179,9 @@
    <LINK srcnodeid="60" srcpinname="StringIn" dstnodeid="111" dstpinname="Input String">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="112">
-   <BOUNDS type="Box" left="1768" top="9144" width="696" height="208">
+   <BOUNDS type="Box" left="388" top="9514" width="696" height="208">
    </BOUNDS>
-   <BOUNDS type="Node" left="1768" top="9144" width="0" height="0">
+   <BOUNDS type="Node" left="388" top="9514" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -183,9 +191,9 @@
    <LINK srcnodeid="60" srcpinname="ValueIn" dstnodeid="112" dstpinname="Y Input Value">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="113">
-   <BOUNDS type="Box" left="4376" top="8064" width="1400" height="240">
+   <BOUNDS type="Box" left="2996" top="8304" width="1400" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="4376" top="8064" width="0" height="0">
+   <BOUNDS type="Node" left="2996" top="8304" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values="041_sub.v4p">
    </PIN>
@@ -201,9 +209,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" systemname="IOBox (String)" componentmode="InABox" id="114">
-   <BOUNDS type="Node" left="6576" top="8272" width="1304" height="216">
+   <BOUNDS type="Node" left="5196" top="8512" width="1304" height="216">
    </BOUNDS>
-   <BOUNDS type="Box" left="6576" top="8272" width="1304" height="216">
+   <BOUNDS type="Box" left="5196" top="8512" width="2170" height="290">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt;- trigger conflict|">
    </PIN>
@@ -213,11 +221,13 @@
    </PIN>
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
+   <PIN pinname="Size" slicecount="1" values="9">
+   </PIN>
    </NODE>
    <NODE systemname="041_sub" filename="041_sub.v4p" componentmode="Hidden" id="103" nodename="041_sub.v4p">
-   <BOUNDS type="Node" left="1752" top="7808" width="100" height="100">
+   <BOUNDS type="Node" left="372" top="8048" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="1752" top="7808" width="4800" height="3600">
+   <BOUNDS type="Box" left="372" top="8048" width="4800" height="3600">
    </BOUNDS>
    <BOUNDS type="Window" left="5320" top="6096" width="3136" height="2592">
    </BOUNDS>

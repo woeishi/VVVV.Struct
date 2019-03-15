@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta36.dtd" >
-   <PATCH nodename="D:\develop\VVVV.Struct\Nodes\helppatches\GetField (Struct) help.v4p" scrollx="8" scrolly="0" systemname="GetField (Struct) help" filename="D:\develop\VVVV.Struct\Nodes\helppatches\GetField (Struct) help.v4p">
-   <BOUNDS type="Window" left="280" top="592" width="9000" height="6000">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta38.1.dtd" >
+   <PATCH nodename="D:\_patching\_vvvv\vvvv_50beta38.1_x64\packs\struct\nodes\GetField (Struct) help.v4p" scrollx="8" scrolly="0" systemname="GetField (Struct) help" filename="D:\develop\VVVV.Struct\Nodes\helppatches\GetField (Struct) help.v4p">
+   <BOUNDS type="Window" left="-150" top="0" width="8390" height="7370">
    </BOUNDS>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="3" systemname="IOBox (String)">
    <BOUNDS type="Node" left="208" top="208" width="4760" height="424">
@@ -43,9 +43,9 @@
    </PIN>
    </NODE>
    <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="4">
-   <BOUNDS type="Node" left="328" top="2048" width="100" height="100">
+   <BOUNDS type="Node" left="328" top="1748" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="328" top="2048" width="1600" height="1600">
+   <BOUNDS type="Box" left="328" top="1748" width="1600" height="1600">
    </BOUNDS>
    <BOUNDS type="Window" left="4656" top="8336" width="3392" height="2912">
    </BOUNDS>
@@ -79,9 +79,9 @@
    <LINK srcnodeid="4" srcpinname="Output" dstnodeid="5" dstpinname="Input 1">
    </LINK>
    <NODE systemname="Join (Struct)" filename="%VVVV%\packs\struct\nodes\Struct.Nodes.dll" nodename="Join (Struct)" componentmode="Hidden" id="6">
-   <BOUNDS type="Node" left="2928" top="2048" width="100" height="100">
+   <BOUNDS type="Node" left="2048" top="2288" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="2928" top="2048" width="1600" height="1600">
+   <BOUNDS type="Box" left="2048" top="2288" width="1600" height="1600">
    </BOUNDS>
    <BOUNDS type="Window" left="9136" top="584" width="3392" height="2912">
    </BOUNDS>
@@ -101,9 +101,9 @@
    <LINK srcnodeid="6" srcpinname="Output" dstnodeid="5" dstpinname="Input 2">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="7" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="512" top="4488" width="696" height="504">
+   <BOUNDS type="Box" left="840" top="4730" width="696" height="504">
    </BOUNDS>
-   <BOUNDS type="Node" left="512" top="4488" width="0" height="0">
+   <BOUNDS type="Node" left="840" top="4730" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -113,13 +113,15 @@
    </PIN>
    <PIN pinname="Show Grid" slicecount="1" values="1">
    </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="DoubleIn">
+   </PIN>
    </NODE>
    <LINK srcnodeid="0" srcpinname="DoubleIn" dstnodeid="7" dstpinname="Y Input Value">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="8" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="328" top="1472" width="696" height="208">
+   <BOUNDS type="Box" left="328" top="1372" width="696" height="208">
    </BOUNDS>
-   <BOUNDS type="Node" left="328" top="1472" width="0" height="0">
+   <BOUNDS type="Node" left="328" top="1372" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -133,9 +135,9 @@
    <LINK srcnodeid="8" srcpinname="Y Output Value" dstnodeid="4" dstpinname="DoubleIn">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="9" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="2936" top="1472" width="696" height="208">
+   <BOUNDS type="Box" left="2036" top="1812" width="696" height="208">
    </BOUNDS>
-   <BOUNDS type="Node" left="2936" top="1472" width="0" height="0">
+   <BOUNDS type="Node" left="2036" top="1812" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="2">
    </PIN>
@@ -149,9 +151,9 @@
    <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="6" dstpinname="DoubleIn">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="10" systemname="IOBox (String)">
-   <BOUNDS type="Box" left="1888" top="4512" width="720" height="472">
+   <BOUNDS type="Box" left="1890" top="4730" width="720" height="472">
    </BOUNDS>
-   <BOUNDS type="Node" left="1888" top="4512" width="0" height="0">
+   <BOUNDS type="Node" left="1890" top="4730" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Default" slicecount="1" values="||">
    </PIN>
@@ -163,13 +165,15 @@
    </PIN>
    <PIN pinname="Show Grid" slicecount="1" values="1">
    </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="StringIn">
+   </PIN>
    </NODE>
    <LINK srcnodeid="0" srcpinname="StringIn" dstnodeid="10" dstpinname="Input String">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="11" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="1360" top="4480" width="280" height="520">
+   <BOUNDS type="Box" left="1360" top="4160" width="280" height="520">
    </BOUNDS>
-   <BOUNDS type="Node" left="1360" top="4480" width="0" height="0">
+   <BOUNDS type="Node" left="1360" top="4160" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -189,9 +193,9 @@
    <LINK srcnodeid="0" srcpinname="DoubleIn Bin Size" dstnodeid="11" dstpinname="Y Input Value">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="12" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="2672" top="4528" width="280" height="520">
+   <BOUNDS type="Box" left="2400" top="4160" width="280" height="520">
    </BOUNDS>
-   <BOUNDS type="Node" left="2672" top="4528" width="0" height="0">
+   <BOUNDS type="Node" left="2400" top="4160" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -225,9 +229,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="15" systemname="IOBox (String)">
-   <BOUNDS type="Box" left="4656" top="1472" width="696" height="208">
+   <BOUNDS type="Box" left="3896" top="1702" width="696" height="208">
    </BOUNDS>
-   <BOUNDS type="Node" left="4656" top="1472" width="0" height="0">
+   <BOUNDS type="Node" left="3896" top="1702" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values="vvvv">
    </PIN>
@@ -243,9 +247,9 @@
    <LINK srcnodeid="15" srcpinname="Output String" dstnodeid="6" dstpinname="OtherString">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="16" systemname="IOBox (String)">
-   <BOUNDS type="Box" left="1736" top="1472" width="696" height="208">
+   <BOUNDS type="Box" left="1846" top="1372" width="696" height="208">
    </BOUNDS>
-   <BOUNDS type="Node" left="1736" top="1472" width="0" height="0">
+   <BOUNDS type="Node" left="1846" top="1372" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="1" values="hello">
    </PIN>
@@ -261,11 +265,11 @@
    <LINK srcnodeid="16" srcpinname="Output String" dstnodeid="4" dstpinname="StringIn">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="17" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="4240" top="3352" width="4760" height="560">
+   <BOUNDS type="Node" left="3810" top="3222" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="4240" top="3352" width="4240" height="1088">
+   <BOUNDS type="Box" left="3810" top="3222" width="4290" height="1040">
    </BOUNDS>
-   <PIN pinname="Input String" slicecount="1" visible="0" values="|open up the inspektor an specify the fields you are interested in the same way you do it on joins or splits&cr;&lf;&cr;&lf;in case the input struct has a field that matches, the data will be on the outputs|">
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|open up the inspektor an specify the fields you are interested in the same way you do it on joins or splits.&cr;&lf;&cr;&lf;in case the input struct has a field that matches, the data will be on the outputs.|">
    </PIN>
    <PIN pinname="Output String" slicecount="1" visible="0" values="||">
    </PIN>
@@ -273,9 +277,9 @@
    <LINK srcnodeid="5" srcpinname="Output" dstnodeid="0" dstpinname="Input">
    </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="18" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="336" top="5168" width="4760" height="560">
+   <BOUNDS type="Node" left="216" top="5558" width="4760" height="560">
    </BOUNDS>
-   <BOUNDS type="Box" left="336" top="5168" width="8144" height="224">
+   <BOUNDS type="Box" left="216" top="5558" width="4460" height="240">
    </BOUNDS>
    <PIN pinname="Input String" slicecount="1" visible="0" values="|check out the demo folder for a more in depth explanation|">
    </PIN>
@@ -284,16 +288,38 @@
    </NODE>
    <PACK Name="dx11" Version="1.3.1">
    </PACK>
-   <PACK Name="addonpack" Version="36.0.0">
+   <PACK Name="addonpack" Version="38.1.0">
    </PACK>
    <NODE nodename="SetField (Struct)" componentmode="Hidden" id="20">
-   <BOUNDS type="Node" left="7552" top="4824" width="0" height="0">
+   <BOUNDS type="Node" left="4652" top="4674" width="0" height="0">
    </BOUNDS>
-   <BOUNDS type="Box" left="7552" top="4824" width="0" height="0">
+   <BOUNDS type="Box" left="4652" top="4674" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Fields" slicecount="1" values="|color ColorIn; string StringIn;|">
    </PIN>
    <PIN pinname="Input" visible="1" slicecount="1" values="||">
    </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" systemname="IOBox (String)" componentmode="InABox" id="21">
+   <BOUNDS type="Node" left="3830" top="4630" width="700" height="230">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3830" top="4630" width="700" height="230">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|see also:|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE systemname="Inspektor (VVVV)" nodename="Inspektor (VVVV)" componentmode="InAWindow" id="22" hiddenwhenlocked="1">
+   <BOUNDS type="Node" left="3840" top="2800" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3840" top="2800" width="2600" height="3200">
+   </BOUNDS>
+   <BOUNDS type="Window" left="8040" top="0" width="5320" height="7330">
+   </BOUNDS>
    </NODE>
    </PATCH>
