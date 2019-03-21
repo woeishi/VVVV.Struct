@@ -5,7 +5,7 @@ using VVVV.Struct.Core;
 
 namespace VVVV.Struct.Factories
 {
-    public class BaseFieldTypeRegistry : IFieldTypeRegistry
+    public abstract class BaseFieldTypeRegistry : IFieldTypeRegistry
     {
         public virtual string ContainerType => "Null";
         public IContainerRegistry ContainerRegistry { get; set; }

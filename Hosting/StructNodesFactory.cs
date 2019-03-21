@@ -47,7 +47,9 @@ namespace VVVV.Struct.Hosting
 
             RegisterFieldtypeRegistry(new PrimitivesFieldTypeRegistry());
             RegisterFieldtypeRegistry(new CSFieldTypeRegistry(FSolution));
-            RegisterFieldtypeRegistry(new VLFieldTypeRegistry(FHDEHost));
+            var vlReg = new VLFieldTypeRegistry();
+            AddonFactoriesLoaded += vlReg.VLFactoryLoaded;
+            RegisterFieldtypeRegistry(vlReg);
 
             foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
             {

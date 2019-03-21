@@ -6,7 +6,7 @@ namespace VVVV.Struct.Factories
     {
         public override string ContainerType => "Stream";
 
-        public override bool AddAssembly(System.Reflection.Assembly a) => true;
+        public override bool AddAssembly(System.Reflection.Assembly a) => !a.IsDynamic;
 
         public override bool StringToType(string typestring, out Type type)
         {
@@ -22,14 +22,18 @@ namespace VVVV.Struct.Factories
                 {
                     try
                     {
-                        type = a.GetType(typestring, false, true);
-                        //static is also abstract&sealed
-                        // \..\ is an exception to avoid loading from falsly loaded assemblies (notui)
-                        if (type != null && (!type.IsAbstract) && (!a.Location.Contains(@"\..\"))) 
+                        if (!a.IsDynamic)
                         {
-                            FMappings.Add(type.FullName.ToLower(), type);
-                            return true;
+                            type = a.GetType(typestring, false, true);
+                            //static is also abstract&sealed
+                            // \..\ is an exception to avoid loading from falsly loaded assemblies (notui)
+                            if (type != null && (!type.IsAbstract) && (!a.Location.Contains(@"\..\")))
+                            {
+                                FMappings.Add(type.FullName.ToLower(), type);
+                                return true;
+                            }
                         }
+                        
                     }
                     catch (Exception e)
                     {

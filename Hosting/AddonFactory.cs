@@ -20,11 +20,19 @@ namespace VVVV.Struct.Hosting
     [Export(typeof(IAddonFactory))]
     [Export(typeof(StructNodesFactory))]
     [ComVisible(false)]
-    public partial class StructNodesFactory : DotNetPluginFactory
+    public partial class StructNodesFactory : DotNetPluginFactory, IPartImportsSatisfiedNotification
     {
         CompositionContainer FParentContainer;
         IORegistry FIORegistry;
         ISolution FSolution;
+        
+        [ImportMany]
+        public List<IAddonFactory> AddonFactories
+        {
+            get;
+            private set;
+        }
+        public event EventHandler AddonFactoriesLoaded;
 
         string FBasePath;
 
@@ -41,6 +49,8 @@ namespace VVVV.Struct.Hosting
 
             Initialize();
         }
+
+        public void OnImportsSatisfied() => AddonFactoriesLoaded?.Invoke(AddonFactories, EventArgs.Empty);
 
         void ComposeIDeclarationFactory(IDeclarationFactory f)
         {

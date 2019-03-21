@@ -14,6 +14,7 @@ namespace VVVV.Struct.Hosting
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class IOManager : IIOManager
     {
+        readonly object dictLock = new object();
         Dictionary<Field, IOContainer> FIOContainers;
         IDeclarationFactory FDeclarationFactory;
 
@@ -67,12 +68,15 @@ namespace VVVV.Struct.Hosting
             var f = sender as Field;
             try
             {
-                var order = FIOContainers[f].Order;
-                FIOContainers[f].Dispose();
-                FIOContainers.Remove(f);
-                var b = CreateIO(f, IsInput, IsBinSized, order);
+                lock (dictLock)
+                {
+                    var order = FIOContainers[f].Order;
+                    FIOContainers[f].Dispose();
+                    FIOContainers.Remove(f);
+                    var b = CreateIO(f, IsInput, IsBinSized, order);
 
-                IOsChanged?.Invoke(null, EventArgs.Empty);
+                    IOsChanged?.Invoke(null, EventArgs.Empty);
+                }
             }
             catch (Exception ex)
             {

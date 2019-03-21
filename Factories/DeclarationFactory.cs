@@ -47,7 +47,10 @@ namespace VVVV.Struct.Factories
                 {
                     if (ftr.AddAssembly(e.LoadedAssembly))
                     {
-                        AssemblyAdded(ftr);
+                        // not using the emitted vl assembly for type changes yet
+                        // just claim the assembly, processing of types happens on the update event of vl runtime
+                        if (!(ftr is VLFieldTypeRegistry))
+                            AssemblyAdded(ftr);
                         return;
                     }
                 }
@@ -140,7 +143,7 @@ namespace VVVV.Struct.Factories
                 if (FFields[k].ContainerType == "Null")
                 {
                     Type t = null;
-                    if (fieldtypeRegistry.StringToType(FFields[k].Typestring, out t))
+                    if (fieldtypeRegistry.StringToType(FFields[k].Typestring, out t) && t != FFields[k].FieldType)
                     {
                         FFields[k].FieldType = t;
                         FFields[k].ContainerType = fieldtypeRegistry.ContainerType;

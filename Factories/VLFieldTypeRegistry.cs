@@ -15,20 +15,19 @@ namespace VVVV.Struct.Factories
 
         public event EventHandler<string> TypeUpdated;
 
+        readonly object lockObj = new object();
         List<Assembly> FVLAss;
-        IHDEHost FHDE;
+        int lastSyncLength = 0;
 
-        public VLFieldTypeRegistry(IHDEHost hde)
+        public VLFieldTypeRegistry()
         {
             FMappings = new Dictionary<string, Type>();
             FVLAss = new List<Assembly>();
-            FHDE = hde;
-            FHDE.MainLoop.OnPrepareGraph += MainLoop_OnPrepareGraph;
         }
 
-        void MainLoop_OnPrepareGraph(object sender, EventArgs e)
+        public void VLFactoryLoaded(object sender, EventArgs e)
         {
-            foreach (var af in FHDE.AddonFactories)
+            foreach (var af in sender as List<IAddonFactory>)
             {
                 if (af.JobStdSubPath == "vl")
                 {
@@ -51,7 +50,6 @@ namespace VVVV.Struct.Factories
                         var mInfo = this.GetType().GetMethod("SyncAssembly", BindingFlags.Instance | BindingFlags.NonPublic);
                         var d = Delegate.CreateDelegate(updateEvent.EventHandlerType, this, mInfo, true); 
                         updateEvent.AddEventHandler(runtimehost, d);
-                        FHDE.MainLoop.OnPrepareGraph -= MainLoop_OnPrepareGraph;
                     }
                 }
             }
@@ -61,19 +59,37 @@ namespace VVVV.Struct.Factories
         {
             if (a.IsDynamic && a.FullName.Contains("VL.Dynamic"))
             {
-                if (FVLAss.Count == 0)
-                    FVLAss.Add(a);
-                else
-                    FVLAss.Insert(0, a);
-                return true;
+                lock(lockObj)
+                {
+                    if (FVLAss.Count == 0)
+                        FVLAss.Add(a);
+                    else
+                        FVLAss.Insert(0, a);
+                    return true;
+                }
             }
             return false;
         }
 
         void SyncAssembly(object sender, dynamic e)
         {
-            foreach (var t in FVLAss[0].DefinedTypes)
-                TypeUpdated?.Invoke(this, t.FullName.ToLower());
+            if(FVLAss.Count > 0)
+            {
+                lock(lockObj)
+                {
+                    for (int i = 0; i < FVLAss.Count-lastSyncLength; i++)
+                    {
+                        foreach (var t in FVLAss[i].DefinedTypes)
+                        {
+                            var typestring = t.FullName.ToLower();
+                            if (FMappings.ContainsKey(typestring))
+                                FMappings[typestring] = t;
+                            TypeUpdated?.Invoke(this, t.FullName.ToLower());
+                        }
+                    }
+                    lastSyncLength = FVLAss.Count;
+                }
+            }
         }
 
         public virtual bool StringToType(string typestring, out Type type)
