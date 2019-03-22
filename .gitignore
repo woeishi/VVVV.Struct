@@ -21,6 +21,9 @@ obj/
 *.user
 *.sln.docstates
 
+# visualstudio
+.vs/
+
 #develop debug files
 wrk/
 
